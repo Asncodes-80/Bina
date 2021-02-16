@@ -22,6 +22,7 @@ dependencies:
   # adaptive_action_sheet:
   dio:
   shared_preferences:
+  flutter_secure_storage: ^3.3.5
   provider:
   image_picker:
   image_native_resizer:
