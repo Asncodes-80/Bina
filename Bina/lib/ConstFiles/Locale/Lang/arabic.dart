@@ -11,5 +11,6 @@ Map<String, String> arabicLang = {
   "emailOrPhone": "ناوی بەکارهێنەر یان ژمارەی مۆبایل",
   "password": "كلمه السر",
   "signupInLogin": "إذا لم يكن لديك حساب ، انقر هنا",
-  "loginMian": "إذا لم يكن لديك حساب ، انقر هنا"
+  "loginMian": "إذا لم يكن لديك حساب ، انقر هنا",
+  "fullname": "الاسم الأول واسم العائلة"
 };

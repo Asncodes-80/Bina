@@ -14,3 +14,6 @@ HexColor activeColor = HexColor("#4387EA");
 const double bottomBtnSize = 20;
 const double titleTextSize = 25;
 const double subTitleTextSize = 15;
+
+// API
+const baseURL = "https://bahoz.ir";

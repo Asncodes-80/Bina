@@ -11,5 +11,6 @@ Map<String, String> kurdishLang = {
   "emailOrPhone": "ناوی بەکارهێنەر یان ژمارەی مۆبایل",
   "password": "نهێنوشە",
   "signupInLogin": "ئەگەر ئەژمێرێکت نیە، کلیک لێرە بکە",
-  "loginMian": "ئەگەر ئەژمێرێکت نیە، کلیک لێرە بکە"
+  "loginMian": "ئەگەر ئەژمێرێکت نیە، کلیک لێرە بکە",
+  "fullname": "ناو و پاشناو"
 };

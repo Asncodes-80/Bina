@@ -120,7 +120,9 @@ class _LoginState extends State<Login> {
       ),
       bottomNavigationBar: BottomButton(
           color: actionCt,
-          onTapped: () {},
+          onTapped: () {
+            // will come to save
+          },
           text: themeChange.langName
               ? arabicLang["loginMian"]
               : kurdishLang["loginMian"]),

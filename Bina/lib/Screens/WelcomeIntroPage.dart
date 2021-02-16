@@ -4,7 +4,7 @@ import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
-import 'package:Bina/Screens/tabsScreens/pages.dart';
+import 'package:Bina/Screens/welcomePageViews/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
