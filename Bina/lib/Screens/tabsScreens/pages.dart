@@ -29,12 +29,11 @@ class WelcomeToMarket extends StatelessWidget {
                 text: themeChange
                     ? arabicLang["welcome"]
                     : kurdishLang["welcome"],
-                color: Colors.black,
-                fontSize: 25,
+                fontSize: titleTextSize,
                 fw: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 60),
+            SizedBox(height: 70),
             BottomStatusLines(
                 line1AciveColor: line1,
                 line2AciveColor: line2,
@@ -82,9 +81,8 @@ class ChooseLang extends StatelessWidget {
                 text: themeChange
                     ? arabicLang["chooseLanguage"]
                     : kurdishLang["chooseLanguage"],
-                color: Colors.black,
-                fontSize: 30,
-                // fw: FontWeight.bold,
+                fontSize: titleTextSize,
+                fw: FontWeight.bold,
               ),
             ),
             SizedBox(height: 60),
@@ -102,7 +100,6 @@ class ChooseLang extends StatelessWidget {
                       SizedBox(height: 20),
                       CustomText(
                         text: "کوردی",
-                        color: Colors.black,
                         fontSize: 20,
                         fw: FontWeight.bold,
                       ),
@@ -120,8 +117,7 @@ class ChooseLang extends StatelessWidget {
                       SizedBox(height: 20),
                       CustomText(
                         text: "عربی",
-                        color: Colors.black,
-                        fontSize: 20,
+                        fontSize: titleTextSize,
                         fw: FontWeight.bold,
                       ),
                     ],
@@ -129,7 +125,7 @@ class ChooseLang extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 40),
             BottomStatusLines(
                 line1AciveColor: line1,
                 line2AciveColor: line2,
@@ -142,12 +138,20 @@ class ChooseLang extends StatelessWidget {
 }
 
 class ReadyToSign extends StatelessWidget {
-  const ReadyToSign({this.line1, this.line2, this.line3, this.themeChange});
+  const ReadyToSign(
+      {this.line1,
+      this.line2,
+      this.line3,
+      this.themeChange,
+      this.signupPressed,
+      this.loginPressed});
 
   final themeChange;
   final line1;
   final line2;
   final line3;
+  final Function signupPressed;
+  final Function loginPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -165,13 +169,13 @@ class ReadyToSign extends StatelessWidget {
                 text: themeChange
                     ? arabicLang["accountEntry"]
                     : kurdishLang["accountEntry"],
-                color: Colors.black,
-                fontSize: 30,
-                // fw: FontWeight.bold,
+                fontSize: titleTextSize,
+                fw: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 20),
             MaterialButton(
-              onPressed: () {},
+              onPressed: signupPressed,
               color: actionCt,
               child: CustomText(
                 text:
@@ -181,7 +185,7 @@ class ReadyToSign extends StatelessWidget {
               ),
             ),
             MaterialButton(
-              onPressed: () {},
+              onPressed: loginPressed,
               color: actionCt,
               child: CustomText(
                 text: themeChange
@@ -191,7 +195,7 @@ class ReadyToSign extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            SizedBox(height: 10),
+            // SizedBox(height: 10),
             BottomStatusLines(
                 line1AciveColor: line1,
                 line2AciveColor: line2,

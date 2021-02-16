@@ -12,3 +12,5 @@ HexColor activeColor = HexColor("#4387EA");
 
 // Size
 const double bottomBtnSize = 20;
+const double titleTextSize = 25;
+const double subTitleTextSize = 15;

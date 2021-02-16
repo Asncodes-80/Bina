@@ -1,6 +1,7 @@
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Screens/tabsScreens/pages.dart';
@@ -96,6 +97,8 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
                 line1: line1AciveColor,
                 line2: line2AciveColor,
                 line3: line3AciveColor,
+                signupPressed: () => Navigator.pushNamed(context, signup),
+                loginPressed: () => Navigator.pushNamed(context, login),
               ),
             ],
           ),

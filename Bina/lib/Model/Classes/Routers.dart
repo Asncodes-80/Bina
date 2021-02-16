@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:Bina/Screens/splashScreen.dart';
 import 'package:Bina/Screens/WelcomeIntroPage.dart';
 import 'package:Bina/Screens/maino.dart';
+import 'package:Bina/Screens/login.dart';
+import 'package:Bina/Screens/signup.dart';
 
 class AppRouters {
   static Route<dynamic> allRouters(RouteSettings settings) {
@@ -17,6 +19,14 @@ class AppRouters {
         break;
       case maino:
         return MaterialPageRoute(builder: (_) => Maino());
+        break;
+
+      case signup:
+        return MaterialPageRoute(builder: (_) => Signup());
+        break;
+
+      case login:
+        return MaterialPageRoute(builder: (_) => Login());
         break;
     }
   }
