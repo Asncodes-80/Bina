@@ -2,7 +2,7 @@ import 'package:Bina/Model/Classes/ApiAccess.dart';
 
 ApiAccess api = ApiAccess();
 
-class GettingProvincesList {
+class GettingAPIAsyncList {
   Future<List> getProvinces() async {
     return await api.getProvinces();
   }

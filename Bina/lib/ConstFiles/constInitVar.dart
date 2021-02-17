@@ -17,3 +17,6 @@ const double subTitleTextSize = 15;
 
 // API
 const baseURL = "https://bahoz.ir";
+
+HexColor lightBar = HexColor("#FFFFFF");
+HexColor darkBar = HexColor("#191A1B");

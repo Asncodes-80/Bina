@@ -14,7 +14,8 @@ class TextFields extends StatelessWidget {
       this.errText,
       this.enteringEditing,
       this.readOnly,
-      this.initValue});
+      this.initValue,
+      this.keyType});
 
   final String lblText;
   final Function onChangeText;
@@ -27,6 +28,7 @@ class TextFields extends StatelessWidget {
   final Function enteringEditing;
   final bool readOnly;
   final String initValue;
+  final keyType;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class TextFields extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: TextFormField(
           readOnly: readOnly,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: keyType,
           initialValue: initValue,
           maxLength: maxLen,
           validator: validate,

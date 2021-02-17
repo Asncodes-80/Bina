@@ -20,6 +20,10 @@ dependencies:
   double_back_to_close_app: 
   # modal_bottom_sheet:
   # adaptive_action_sheet:
+  # country_pickers: ^1.3.0
+  geolocator: ^6.2.0
+  geocoder: ^0.2.1
+  intl_phone_field: ^1.4.2
   dio:
   shared_preferences:
   flutter_secure_storage: ^3.3.5

@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
     username = "";
     password = "";
     showMePass = Icons.remove_red_eye;
-    protectedPassword = false;
+    protectedPassword = true;
     super.initState();
   }
 
@@ -49,6 +49,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 30),
               TextFields(
+                keyType: TextInputType.emailAddress,
                 lblText: themeChange.langName
                     ? arabicLang["emailOrPhone"]
                     : kurdishLang["emailOrPhone"],
@@ -69,6 +70,7 @@ class _LoginState extends State<Login> {
                 lblText: themeChange.langName
                     ? arabicLang["password"]
                     : kurdishLang["password"],
+                keyType: TextInputType.emailAddress,
                 maxLen: 20,
                 readOnly: false,
                 // errText: emptyTextFieldErrPassword == null

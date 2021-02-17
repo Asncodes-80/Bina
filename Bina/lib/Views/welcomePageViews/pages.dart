@@ -1,17 +1,13 @@
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/kurdish.dart';
 
 class WelcomeToMarket extends StatelessWidget {
-  const WelcomeToMarket({this.themeChange, this.line1, this.line2, this.line3});
+  const WelcomeToMarket({this.themeChange});
 
   final bool themeChange;
-  final line1;
-  final line2;
-  final line3;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +30,6 @@ class WelcomeToMarket extends StatelessWidget {
               ),
             ),
             SizedBox(height: 70),
-            BottomStatusLines(
-                line1AciveColor: line1,
-                line2AciveColor: line2,
-                line3AciveColor: line3)
           ],
         ),
       ),
@@ -46,19 +38,10 @@ class WelcomeToMarket extends StatelessWidget {
 }
 
 class ChooseLang extends StatelessWidget {
-  const ChooseLang(
-      {this.themeChange,
-      this.line1,
-      this.line2,
-      this.line3,
-      this.kurdishPressed,
-      this.arabicPressed});
+  const ChooseLang({this.themeChange, this.kurdishPressed, this.arabicPressed});
 
   final themeChange;
 
-  final line1;
-  final line2;
-  final line3;
   final Function kurdishPressed;
   final Function arabicPressed;
 
@@ -126,10 +109,6 @@ class ChooseLang extends StatelessWidget {
               ],
             ),
             SizedBox(height: 40),
-            BottomStatusLines(
-                line1AciveColor: line1,
-                line2AciveColor: line2,
-                line3AciveColor: line3)
           ],
         ),
       ),
@@ -138,18 +117,10 @@ class ChooseLang extends StatelessWidget {
 }
 
 class ReadyToSign extends StatelessWidget {
-  const ReadyToSign(
-      {this.line1,
-      this.line2,
-      this.line3,
-      this.themeChange,
-      this.signupPressed,
-      this.loginPressed});
+  const ReadyToSign({this.themeChange, this.signupPressed, this.loginPressed});
 
   final themeChange;
-  final line1;
-  final line2;
-  final line3;
+
   final Function signupPressed;
   final Function loginPressed;
 
@@ -196,51 +167,8 @@ class ReadyToSign extends StatelessWidget {
               ),
             ),
             // SizedBox(height: 10),
-            BottomStatusLines(
-                line1AciveColor: line1,
-                line2AciveColor: line2,
-                line3AciveColor: line3)
           ],
         ),
-      ),
-    );
-  }
-}
-
-class BottomStatusLines extends StatelessWidget {
-  const BottomStatusLines({
-    Key key,
-    @required this.line1AciveColor,
-    @required this.line2AciveColor,
-    @required this.line3AciveColor,
-  }) : super(key: key);
-
-  final HexColor line1AciveColor;
-  final HexColor line2AciveColor;
-  final HexColor line3AciveColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.minimize,
-            color: line1AciveColor,
-            size: 40,
-          ),
-          Icon(
-            Icons.minimize,
-            color: line2AciveColor,
-            size: 40,
-          ),
-          Icon(
-            Icons.minimize,
-            color: line3AciveColor,
-            size: 40,
-          ),
-        ],
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
-import 'package:Bina/Screens/welcomePageViews/pages.dart';
+import 'package:Bina/Views/welcomePageViews/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +33,6 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-
-    var line1AciveColor = pageIndex == 0 ? activeColor : notActiveColor;
-    var line2AciveColor = pageIndex == 1 ? activeColor : notActiveColor;
-    var line3AciveColor = pageIndex == 2 ? activeColor : notActiveColor;
 
     // Specify button next in Arabic and Kurdish
     final submissionBtnText =
@@ -68,17 +64,8 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
               });
             },
             children: [
-              WelcomeToMarket(
-                themeChange: themeChange.langName,
-                line1: line1AciveColor,
-                line2: line2AciveColor,
-                line3: line3AciveColor,
-              ),
               ChooseLang(
                 themeChange: themeChange.langName,
-                line1: line1AciveColor,
-                line2: line2AciveColor,
-                line3: line3AciveColor,
                 arabicPressed: () {
                   print("Arabic");
                   setState(() {
@@ -92,11 +79,11 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
                   });
                 },
               ),
+              WelcomeToMarket(
+                themeChange: themeChange.langName,
+              ),
               ReadyToSign(
                 themeChange: themeChange.langName,
-                line1: line1AciveColor,
-                line2: line2AciveColor,
-                line3: line3AciveColor,
                 signupPressed: () => Navigator.pushNamed(context, signup),
                 loginPressed: () => Navigator.pushNamed(context, login),
               ),
@@ -127,6 +114,6 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
 
     // Create New Table SQL base for user in saving products
 
-    // Navigator.pushNamed(context, maino);
+    Navigator.pushNamed(context, maino);
   }
 }

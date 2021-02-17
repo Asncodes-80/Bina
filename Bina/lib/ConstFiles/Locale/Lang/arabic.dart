@@ -10,7 +10,11 @@ Map<String, String> arabicLang = {
   "signupCreateAccount": "تسجيل",
   "emailOrPhone": "ناوی بەکارهێنەر یان ژمارەی مۆبایل",
   "password": "كلمه السر",
+  "rePassword": "التحقق من كلمة المرور",
   "signupInLogin": "إذا لم يكن لديك حساب ، انقر هنا",
   "loginMian": "إذا لم يكن لديك حساب ، انقر هنا",
-  "fullname": "الاسم الأول واسم العائلة"
+  "fullname": "الاسم الأول واسم العائلة",
+  "state": "اختر المحافظة",
+  "phoneNumber": "رقم الهاتف",
+  "address": "عنوانك الكامل",
 };

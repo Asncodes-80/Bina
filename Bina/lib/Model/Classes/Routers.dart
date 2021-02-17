@@ -2,11 +2,11 @@ import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:flutter/material.dart';
 
 // Screens
-import 'package:Bina/Screens/splashScreen.dart';
-import 'package:Bina/Screens/WelcomeIntroPage.dart';
-import 'package:Bina/Screens/maino.dart';
-import 'package:Bina/Screens/login.dart';
-import 'package:Bina/Screens/signup.dart';
+import 'package:Bina/Views/splashScreen.dart';
+import 'package:Bina/Views/WelcomeIntroPage.dart';
+import 'package:Bina/Views/maino.dart';
+import 'package:Bina/Views/login.dart';
+import 'package:Bina/Views/signup.dart';
 
 class AppRouters {
   static Route<dynamic> allRouters(RouteSettings settings) {
