@@ -4,6 +4,10 @@ ApiAccess api = ApiAccess();
 
 class GettingAPIAsyncList {
   Future<List> getProvinces() async {
-    return await api.getProvinces();
+    try {
+      return await api.getProvinces();
+    } catch (e) {
+      return [];
+    }
   }
 }

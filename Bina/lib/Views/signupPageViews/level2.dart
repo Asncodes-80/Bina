@@ -25,6 +25,7 @@ class PhoneSection extends StatelessWidget {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: IntlPhoneField(
+                  initialValue: phoneNum,
                   decoration: InputDecoration(
                     labelText: themeChanged
                         ? arabicLang["phoneNumber"]

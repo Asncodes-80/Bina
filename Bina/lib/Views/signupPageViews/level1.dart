@@ -11,6 +11,7 @@ class InfoLevel1 extends StatelessWidget {
   const InfoLevel1(
       {this.darkTheme,
       this.langName,
+      this.initFullname,
       this.onChangeFullname,
       this.imgSource,
       this.pickImage,
@@ -21,6 +22,7 @@ class InfoLevel1 extends StatelessWidget {
 
   final bool darkTheme;
   final bool langName;
+  final String initFullname;
   final File imgSource;
   final Function pickImage;
   final Function onChangeFullname;
@@ -72,6 +74,7 @@ class InfoLevel1 extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextFields(
+                initValue: initFullname,
                 lblText:
                     langName ? arabicLang["fullname"] : kurdishLang["fullname"],
                 keyType: TextInputType.name,

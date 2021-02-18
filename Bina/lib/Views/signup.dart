@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:Bina/ConstFiles/Locale/Lang/arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
@@ -18,16 +18,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-int pageIndex;
-var _pageContoller = PageController();
-bool protectedPassword;
+dynamic themeChange;
+int pageIndex = 0;
+var _pageContoller;
+bool protectedPassword = true;
 var showMePass;
 
 // Level 1 var
 String fullname;
-List provinceLs;
+List provinceLs = [];
 var _provinceVal;
-var _provinceValSelected;
+var _provinceValSelected = "";
 File imgSource;
 
 // Level 2 var
@@ -38,7 +39,7 @@ String password;
 String rePassword;
 
 // Level 4 var
-String address = "";
+String address;
 
 CurrentUserLocation cul = CurrentUserLocation();
 GettingAPIAsyncList gettingAPIAsync = GettingAPIAsyncList();
@@ -51,38 +52,56 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
   @override
   void initState() {
+    // pageIndex = 0;
+    // provinceLs = [];
+    // _provinceValSelected = "";
+    // phoneNumber = "";
+    // protectedPassword = true;
+    // showMePass = Icons.remove_red_eye;
+    // password = "";
+    // rePassword = "";
+    gettingAPIAsync.getProvinces().then((provincesLs) {
+      setState(() {
+        provinceLs = provincesLs;
+      });
+    });
+    Timer.periodic(Duration(seconds: 10), (timer) {
+      gettingAPIAsync.getProvinces().then((provincesLs) {
+        setState(() {
+          provinceLs = provincesLs;
+        });
+      });
+    });
+    cul.getLocation().then((value) {
+      setState(() {
+        address = value;
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
     pageIndex = 0;
-    _pageContoller = PageController();
-    provinceLs = [];
+    fullname = "";
+    imgSource = null;
     _provinceValSelected = "";
     phoneNumber = "";
     protectedPassword = true;
     showMePass = Icons.remove_red_eye;
     password = "";
     rePassword = "";
+    address = "";
 
-    gettingAPIAsync.getProvinces().then((provincesLs) {
-      setState(() {
-        provinceLs = provincesLs;
-      });
-    });
-
-    cul.getLocation().then((value) {
-      setState(() {
-        address = value;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    _pageContoller = PageController();
+
+    themeChange = Provider.of<DarkThemeProvider>(context);
     // print(address);
 
     // Specify button next in Arabic and Kurdish
@@ -102,34 +121,37 @@ class _SignupState extends State<Signup> {
       });
     }
 
-    List dropItemList = provinceLs.map(
-      (province) {
-        return DropdownMenuItem(
-          value: province["id"],
-          onTap: () {
-            setState(() {
-              print(province["id"]);
-              _provinceVal = province["id"];
-              _provinceValSelected = themeChange.langName
-                  ? province["name_ar"]
-                  : province["name_ku"];
-            });
-          },
-          child: CustomText(
-            text: themeChange.langName
-                ? province["name_ar"]
-                : province["name_ku"],
-          ),
-        );
-      },
-    ).toList();
+    List dropItemList = provinceLs != []
+        ? provinceLs.map(
+            (province) {
+              return DropdownMenuItem(
+                value: province["id"],
+                onTap: () {
+                  setState(() {
+                    print(province["id"]);
+                    _provinceVal = province["id"];
+                    _provinceValSelected = themeChange.langName
+                        ? province["name_ar"]
+                        : province["name_ku"];
+                  });
+                },
+                child: CustomText(
+                  text: themeChange.langName
+                      ? province["name_ar"]
+                      : province["name_ku"],
+                ),
+              );
+            },
+          ).toList()
+        : [];
 
     List<Widget> signupPages = [
       InfoLevel1(
         darkTheme: themeChange.darkTheme,
         langName: themeChange.langName,
-        provinces: provinceLs,
-        dropItem: dropItemList,
+        initFullname: fullname,
+        provinces: provinceLs != [] ? provinceLs : [],
+        dropItem: provinceLs != [] ? dropItemList : [],
         imgSource: imgSource,
         dropItemSelected: _provinceValSelected,
         pickImage: () {
@@ -236,24 +258,53 @@ class _SignupState extends State<Signup> {
       bool validateRePassword = validate.passwordRegex(rePass);
       if (pass.length > 6 && rePass.length > 6) {
         if (validatePassword && validateRePassword) {
-          // TODO FOR CONN WITH API
-          print("$fullname -  $province, $phoneNo, $pass,  $rePass, $address");
+          if (pass == rePass) {
+            // TODO FOR CONN WITH API
+            print(
+                "$fullname -  $province, $phoneNo, $pass,  $rePass, $address");
+          } else {
+            showStatusInCaseOfFlush(
+                context: context,
+                icon: Icons.vpn_key_sharp,
+                iconColor: actionCt,
+                msg: "Hamahngi nist",
+                title: "");
+          }
         } else {
           // Password is not valid
           print("Password is not valid");
+          showStatusInCaseOfFlush(
+              context: context,
+              icon: Icons.vpn_key_sharp,
+              iconColor: actionCt,
+              msg: themeChange.langName
+                  ? arabicLang["complexPass"]
+                  : kurdishLang["complexPass"],
+              title: "");
         }
       } else {
         // password Length is not enough
         print("password Length is not enough");
+        showStatusInCaseOfFlush(
+            context: context,
+            icon: Icons.low_priority,
+            iconColor: actionCt,
+            msg: themeChange.langName
+                ? arabicLang["moreThan6Pass"]
+                : kurdishLang["moreThan6Pass"],
+            title: "");
       }
     } else {
       // Some form is empty
+      print("Some form is empty");
       showStatusInCaseOfFlush(
           context: context,
           icon: Icons.format_align_left,
           iconColor: actionCt,
-          title: "",
-          msg: "");
+          msg: themeChange.langName
+              ? arabicLang["emptyField"]
+              : kurdishLang["emptyField"],
+          title: "");
     }
 
     // Set new value in firstVisit (key) of flutter secure storage

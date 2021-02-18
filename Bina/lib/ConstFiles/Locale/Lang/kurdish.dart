@@ -17,4 +17,14 @@ Map<String, String> kurdishLang = {
   "state": "دیاریکردنی پارێزگا",
   "phoneNumber": "ژمارەی تەلەفۆن",
   "address": "ناونیشانی  تۆ",
+  "home": "ماڵ",
+  "search": "گەڕان...",
+  "saved": "پاشەکەوتکراوەکان",
+  "profile": "پرۆفایل",
+  "emptyField": "هەندێک فۆرم بەتاڵن",
+  "moreThan6Pass": "پێویستە نهێنوشەکەت درێژتر بێت لە 6 نووسە",
+  "complexPass": "پێویستە نهێنوشەکەت تێکەڵەی پیت و ژمارە بێت",
+  // Maino Market
+  "welcomeTitle": "سڵاو",
+  "welcomeSubTitle": "چوونھ ژوورەوە",
 };

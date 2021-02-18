@@ -36,6 +36,7 @@ class PrivacySection extends StatelessWidget {
             ),
             // First once password
             TextFields(
+              initValue: password,
               lblText: themeChange
                   ? arabicLang["password"]
                   : kurdishLang["password"],
@@ -55,23 +56,22 @@ class PrivacySection extends StatelessWidget {
             ),
             // Cofirm Pasword
             TextFields(
-              lblText: themeChange
-                  ? arabicLang["rePassword"]
-                  : kurdishLang["rePassword"],
-              keyType: TextInputType.emailAddress,
-              maxLen: 20,
-              readOnly: false,
-              // errText: emptyTextFieldErrPassword == null
-              //     ? null
-              //     : emptyTextFieldMsg,
-              textInputType: protectedPassword,
-              textFieldIcon: password == ""
-                  ? Icons.vpn_key_outlined
-                  : Icons.remove_red_eye,
-              iconPressed: hidePasswordIconPressed,
-
-              onChangeText: passChanged,
-            ),
+                initValue: rePassword,
+                lblText: themeChange
+                    ? arabicLang["rePassword"]
+                    : kurdishLang["rePassword"],
+                keyType: TextInputType.emailAddress,
+                maxLen: 20,
+                readOnly: false,
+                // errText: emptyTextFieldErrPassword == null
+                //     ? null
+                //     : emptyTextFieldMsg,
+                textInputType: protectedPassword,
+                textFieldIcon: password == ""
+                    ? Icons.vpn_key_outlined
+                    : Icons.remove_red_eye,
+                iconPressed: hidePasswordIconPressed,
+                onChangeText: rePassChanged),
           ],
         ),
       ),

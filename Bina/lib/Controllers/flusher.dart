@@ -17,12 +17,11 @@ void showStatusInCaseOfFlush({context, String msg, title, icon, iconColor}) {
           fontWeight: FontWeight.bold,
           color: Colors.white),
     ),
-    messageText: Text(
-      msg,
-      textAlign: TextAlign.right,
-      textDirection: TextDirection.rtl,
-      style: TextStyle(fontFamily: mainFont, color: Colors.white),
-    ),
+    messageText: Text(msg,
+        textAlign: TextAlign.right,
+        textDirection: TextDirection.rtl,
+        style:
+            TextStyle(fontFamily: mainFont, color: Colors.white, fontSize: 20)),
     icon: Icon(
       icon,
       size: 28.0,

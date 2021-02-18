@@ -17,4 +17,14 @@ Map<String, String> arabicLang = {
   "state": "اختر المحافظة",
   "phoneNumber": "رقم الهاتف",
   "address": "عنوانك الكامل",
+  "home": "الصفحة الرئيسية",
+  "search": "بحث...",
+  "saved": "تم الحفظ",
+  "profile": "الملف الشخصي",
+  "emptyField": "بعض النماذج فارغة",
+  "moreThan6Pass": "يجب أن تكون كلمة مرورك أطول من 6 أحرف",
+  "complexPass": "يجب أن تتكون كلمة مرورك من مجموعة من الأحرف والأرقام",
+  // Maino Market
+  "welcomeTitle": "مرحبا",
+  "welcomeSubTitle": "تسجیل الدخول إلى حسابك",
 };
