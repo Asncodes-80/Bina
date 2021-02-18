@@ -18,7 +18,8 @@ Map<String, String> kurdishLang = {
   "phoneNumber": "ژمارەی تەلەفۆن",
   "address": "ناونیشانی  تۆ",
   "home": "ماڵ",
-  "search": "گەڕان...",
+  "search": "گەڕان",
+  "searchBar": "گەڕان...",
   "saved": "پاشەکەوتکراوەکان",
   "profile": "پرۆفایل",
   "emptyField": "هەندێک فۆرم بەتاڵن",
@@ -27,4 +28,6 @@ Map<String, String> kurdishLang = {
   // Maino Market
   "welcomeTitle": "سڵاو",
   "welcomeSubTitle": "چوونھ ژوورەوە",
+  "catergories": "جۆرەکان",
+  "moreCategory": "زیاتر"
 };

@@ -3,6 +3,7 @@ import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/categories.dart';
 import 'package:Bina/Views/tabsScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,11 @@ import 'package:provider/provider.dart';
 
 int tabBarIndex;
 var _pageController;
+ProductCategories productCategories = ProductCategories();
+
+// Home page vars
+List productsCategoriesLs = [];
+
 // for Controll of scrolling in stack page usage
 ScrollController homeScrollController;
 final double expandedHight = 150.0;
@@ -27,6 +33,11 @@ class _MainoState extends State<Maino> {
     _pageController = PageController();
     homeScrollController = ScrollController();
     homeScrollController.addListener(() => setState(() => {}));
+
+    productCategories
+        .getCats()
+        .then((pC) => setState(() => productsCategoriesLs = pC));
+
     super.initState();
   }
 
@@ -60,13 +71,15 @@ class _MainoState extends State<Maino> {
       child: Scaffold(
         backgroundColor: mainBlue,
         body: PageView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _pageController,
           onPageChanged: (index) => setState(() => tabBarIndex = index),
           children: [
             HomeShopping(
                 themeChange: themeChange,
                 homeScroller: homeScrollController,
-                exhight: expandedHight),
+                exhight: expandedHight,
+                productCategoriesList: productsCategoriesLs),
             Container(
               child: CustomText(
                   text: themeChange.langName

@@ -18,7 +18,8 @@ Map<String, String> arabicLang = {
   "phoneNumber": "رقم الهاتف",
   "address": "عنوانك الكامل",
   "home": "الصفحة الرئيسية",
-  "search": "بحث...",
+  "search": "بحث",
+  "searchBar": "بحث...",
   "saved": "تم الحفظ",
   "profile": "الملف الشخصي",
   "emptyField": "بعض النماذج فارغة",
@@ -27,4 +28,6 @@ Map<String, String> arabicLang = {
   // Maino Market
   "welcomeTitle": "مرحبا",
   "welcomeSubTitle": "تسجیل الدخول إلى حسابك",
+  "catergories": "التصنيفات",
+  "moreCategory": "أكثر"
 };

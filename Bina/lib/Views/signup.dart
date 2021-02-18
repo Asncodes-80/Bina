@@ -23,6 +23,7 @@ int pageIndex = 0;
 var _pageContoller;
 bool protectedPassword = true;
 var showMePass;
+Timer timer;
 
 // Level 1 var
 String fullname;
@@ -65,7 +66,7 @@ class _SignupState extends State<Signup> {
         provinceLs = provincesLs;
       });
     });
-    Timer.periodic(Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(Duration(seconds: 10), (timer) {
       gettingAPIAsync.getProvinces().then((provincesLs) {
         setState(() {
           provinceLs = provincesLs;
@@ -93,6 +94,7 @@ class _SignupState extends State<Signup> {
     password = "";
     rePassword = "";
     address = "";
+    timer.cancel();
 
     super.dispose();
   }

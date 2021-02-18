@@ -8,4 +8,9 @@ class ApiAccess {
     Response res = await dio.get("$baseURL/provinces");
     return res.data;
   }
+
+  Future<List> getCategories() async {
+    Response categories = await dio.get("$baseURL/categories");
+    return categories.data;
+  }
 }
