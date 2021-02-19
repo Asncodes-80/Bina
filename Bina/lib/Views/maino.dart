@@ -1,10 +1,19 @@
+import 'dart:async';
+
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
+import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/categories.dart';
+import 'package:Bina/Model/gettingDiscounts.dart';
+import 'package:Bina/Views/tabsScreens/favorite.dart';
 import 'package:Bina/Views/tabsScreens/home.dart';
+import 'package:Bina/Views/tabsScreens/myBasket.dart';
+import 'package:Bina/Views/tabsScreens/preferences.dart';
+import 'package:Bina/Views/tabsScreens/searching.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,14 +21,26 @@ import 'package:provider/provider.dart';
 
 int tabBarIndex;
 var _pageController;
+Timer timer;
+// Classes
 ProductCategories productCategories = ProductCategories();
+Discounts discountsProducts = Discounts();
+ProductCategories pcs = ProductCategories();
 
 // Home page vars
 List productsCategoriesLs = [];
+List discountsProductLS = [];
+
+// search page
+String searchKey = "";
+List searchedProduct = [];
 
 // for Controll of scrolling in stack page usage
 ScrollController homeScrollController;
 final double expandedHight = 150.0;
+
+// Search
+ScrollController _search;
 
 class Maino extends StatefulWidget {
   @override
@@ -32,19 +53,36 @@ class _MainoState extends State<Maino> {
     tabBarIndex = 0;
     _pageController = PageController();
     homeScrollController = ScrollController();
+    _search = ScrollController();
     homeScrollController.addListener(() => setState(() => {}));
 
-    productCategories
-        .getCats()
-        .then((pC) => setState(() => productsCategoriesLs = pC));
-
+    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      findContent();
+    });
+    findContent();
     super.initState();
   }
 
   @override
   void dispose() {
     homeScrollController.dispose();
+    searchedProduct = [];
+    _search.dispose();
+    timer.cancel();
     super.dispose();
+  }
+
+  void findContent() {
+    productCategories
+        .getCats()
+        .then((pC) => setState(() => productsCategoriesLs = pC));
+    // Getting all Discounts products
+    discountsProducts
+        .getAllDiscounts()
+        .then((discount) => setState(() => discountsProductLS = discount));
+    pcs
+        .searchProducts(searchKey: searchKey)
+        .then((value) => setState(() => searchedProduct = value));
   }
 
   // For all Scroller Stack
@@ -65,6 +103,8 @@ class _MainoState extends State<Maino> {
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
+    // print("This is DISCOUNTS ${discountsProductLS[0]["name_ar"]}");
+
     return WillPopScope(
       onWillPop: () =>
           SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
@@ -76,31 +116,47 @@ class _MainoState extends State<Maino> {
           onPageChanged: (index) => setState(() => tabBarIndex = index),
           children: [
             HomeShopping(
+              themeChange: themeChange,
+              homeScroller: homeScrollController,
+              exhight: expandedHight,
+              productCategoriesList: productsCategoriesLs,
+              // discountsProduct:
+              //     discountsProductLS.isEmpty ? [] : discountsProductLS,
+              onSearchSumbitKey: (String searchCase) {
+                if (searchCase.length != 0)
+                  Navigator.pushNamed(context, searchResultPage, arguments: {
+                    "currentLang": themeChange.langName,
+                    "searchKey": searchCase,
+                  });
+                else if (searchCase == "")
+                  showStatusInCaseOfFlush(
+                      context: context,
+                      msg: "نمیتوان خالی جست و جو کرد",
+                      title: "",
+                      icon: Icon(Icons.text_fields),
+                      iconColor: Colors.orange);
+              },
+            ),
+            Search(
                 themeChange: themeChange,
-                homeScroller: homeScrollController,
-                exhight: expandedHight,
-                productCategoriesList: productsCategoriesLs),
-            Container(
-              child: CustomText(
-                  text: themeChange.langName
-                      ? arabicLang["search"]
-                      : kurdishLang["search"]),
+                scrollController: _search,
+                searchResult: searchedProduct,
+                // When Click to submit search key
+                onSearchSubmision: (String searchCase) {
+                  setState(() {
+                    searchedProduct = [];
+                    searchKey = searchCase;
+                  });
+                }),
+            MyBasket(
+              themeChange: themeChange,
+              scrollController: _search,
             ),
-            Container(
-              child: Text(""),
+            Saved(
+              themeChange: themeChange,
+              scrollController: _search,
             ),
-            Container(
-              child: CustomText(
-                  text: themeChange.langName
-                      ? arabicLang["saved"]
-                      : kurdishLang["saved"]),
-            ),
-            Container(
-              child: CustomText(
-                  text: themeChange.langName
-                      ? arabicLang["profile"]
-                      : kurdishLang["profile"]),
-            ),
+            Preferences(themeChange: themeChange, scrollController: _search),
           ],
         ),
         bottomNavigationBar: ClipRRect(
@@ -112,10 +168,10 @@ class _MainoState extends State<Maino> {
             textDirection: TextDirection.rtl,
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor: mainBlue,
-              selectedItemColor: Colors.black,
-              unselectedItemColor: HexColor('#FFFFFF'),
-              selectedIconTheme: IconThemeData(color: Colors.black),
+              backgroundColor: Colors.white,
+              selectedItemColor: mainBlue,
+              unselectedItemColor: Colors.grey,
+              selectedIconTheme: IconThemeData(color: mainBlue),
               iconSize: 25,
               unselectedIconTheme: IconThemeData(size: 23),
               selectedFontSize: 14,
@@ -153,11 +209,11 @@ class _MainoState extends State<Maino> {
                     child: Text(""),
                   ),
                   icon: CircleAvatar(
-                    backgroundColor: Colors.white,
+                    backgroundColor: mainBlue,
                     radius: 30,
                     child: Icon(
                       Icons.shopping_cart_outlined,
-                      // color: Colors.white,
+                      color: Colors.white,
                     ),
                   ),
                 ),

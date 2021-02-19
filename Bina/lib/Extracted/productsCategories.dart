@@ -13,7 +13,7 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100,
-      height: 90,
+      height: 140,
       margin: EdgeInsets.symmetric(horizontal: 7),
       decoration: BoxDecoration(
         color: productsBgColor,
@@ -23,7 +23,7 @@ class Categories extends StatelessWidget {
         children: [
           Container(
             width: 100,
-            height: 100,
+            height: 90,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(0),
               boxShadow: [
@@ -44,7 +44,7 @@ class Categories extends StatelessWidget {
           SizedBox(height: 10),
           CustomText(
             text: productName,
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 15,
             fw: FontWeight.bold,
           )

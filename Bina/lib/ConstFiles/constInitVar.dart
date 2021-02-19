@@ -14,6 +14,10 @@ HexColor lightBgColor = HexColor("#F4F5F7");
 HexColor darkBgColor = HexColor("#000000");
 HexColor productsBgColor = HexColor("#85B5FF");
 
+// Preferencs Colors
+HexColor languageBgColor = HexColor("#5753D8");
+HexColor appearanceBgColors = HexColor("#000000");
+
 // Size
 const double bottomBtnSize = 20;
 const double titleTextSize = 25;

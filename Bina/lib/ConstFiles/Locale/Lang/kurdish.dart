@@ -20,6 +20,7 @@ Map<String, String> kurdishLang = {
   "home": "ماڵ",
   "search": "گەڕان",
   "searchBar": "گەڕان...",
+  "searchingProducts": "گەڕان بۆ ئەو بەرهەمەی کە دەتەوێت",
   "saved": "پاشەکەوتکراوەکان",
   "profile": "پرۆفایل",
   "emptyField": "هەندێک فۆرم بەتاڵن",
@@ -29,5 +30,14 @@ Map<String, String> kurdishLang = {
   "welcomeTitle": "سڵاو",
   "welcomeSubTitle": "چوونھ ژوورەوە",
   "catergories": "جۆرەکان",
-  "moreCategory": "زیاتر"
+  "moreCategory": "زیاتر",
+  "myBasket": "سەوەتەی ئێوە",
+  "favorite": "بەرهەمە دڵخوازەکان",
+  "discountTitle": "تخفیفات فصلی",
+  "discountSubtitle": "",
+  // Preferences
+  "themeChange": "تێمی تاریک یان لایت",
+  "titleThemeChange": "ڕێکبەندەکانی ئەپەکە بۆ بەکارهێنانی باشتر",
+  "changeLanguage": "زمان بگۆڕە",
+  "appearanceTitle": "ڕێکبەندەکانی ئەپەکە بۆ بەکارهێنانی باشتر"
 };

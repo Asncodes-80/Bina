@@ -1,3 +1,4 @@
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/productsCategories.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
@@ -5,22 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
-import 'dart:math';
+
+import 'package:lottie/lottie.dart';
 
 class HomeShopping extends StatelessWidget {
   const HomeShopping(
       {@required this.productCategoriesList,
       @required this.themeChange,
       this.homeScroller,
-      this.exhight});
+      this.exhight,
+      this.onSearchSumbitKey});
 
   final DarkThemeProvider themeChange;
   final ScrollController homeScroller;
   final productCategoriesList;
   final exhight;
+  final onSearchSumbitKey;
 
   @override
   Widget build(BuildContext context) {
+    // print("This is DISCOUNTS ${discountsProduct[0]["products"]}");
+
     return SafeArea(
       child: Stack(
         children: [
@@ -99,8 +105,7 @@ class HomeShopping extends StatelessWidget {
                           ),
                           child: TextField(
                             // TODO (Sreach Case will go to searching page)
-                            onSubmitted: (String searchCase) =>
-                                print(searchCase),
+                            onSubmitted: onSearchSumbitKey,
                             decoration: InputDecoration(
                               hintStyle: TextStyle(fontSize: 17),
                               hintText: themeChange.langName
@@ -134,7 +139,70 @@ class HomeShopping extends StatelessWidget {
                     // Ready Categories or more...
                     ReadyProductsCategory(
                         themeChange: themeChange, pcl: productCategoriesList),
-                    // Best Suggestion
+                    Container(
+                      width: double.infinity,
+                      height: 177,
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.6),
+                            spreadRadius: 2,
+                            blurRadius: 7,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/neonDiscount.jpg"),
+                          colorFilter: new ColorFilter.mode(
+                              Colors.black.withOpacity(0.3), BlendMode.srcOver),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: FlatButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, discountPage),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              child: Row(
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  CustomText(
+                                    text: themeChange.langName
+                                        ? arabicLang["discountTitle"]
+                                        : kurdishLang["discountTitle"],
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fw: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                textDirection: TextDirection.rtl,
+                                children: [
+                                  CustomText(
+                                    text: themeChange.langName
+                                        ? arabicLang["discountSubtitle"]
+                                        : kurdishLang["discountSubtitle"],
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fw: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -160,16 +228,28 @@ class ReadyProductsCategory extends StatelessWidget {
     final finalPCLLength = pcl.length > 6 ? pcl.length / 2 : pcl.length;
     final int categoryLen = (finalPCLLength.round());
 
-    final productCate = ListView.builder(
+    final loadCategory = ListView.builder(
       itemCount: categoryLen,
       scrollDirection: Axis.horizontal,
-      itemBuilder: (_, int index) => Categories(
-        productImg: pcl[index]["image"],
-        productName: themeChange.langName
-            ? pcl[index]["name_ar"]
-            : pcl[index]["name_ku"],
+      itemBuilder: (_, int index) => GestureDetector(
+        onTap: () => Navigator.pushNamed(context, productsPage, arguments: {
+          "cateId": pcl[index]["id"],
+          "cateName": themeChange.langName
+              ? pcl[index]["name_ar"]
+              : pcl[index]["name_ku"]
+        }),
+        child: Categories(
+          productImg: pcl[index]["image"],
+          productName: themeChange.langName
+              ? pcl[index]["name_ar"]
+              : pcl[index]["name_ku"],
+        ),
       ),
     );
+
+    final takeLottieLoading = Lottie.asset("assets/lottie/loading.json");
+
+    final productCate = pcl.isEmpty ? takeLottieLoading : loadCategory;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -196,7 +276,8 @@ class ReadyProductsCategory extends StatelessWidget {
                 ),
                 FlatButton(
                   minWidth: 10,
-                  onPressed: () => print("Naivgated to more category loader"),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, moreCategoriesPage),
                   child: CustomText(
                     text: themeChange.langName
                         ? arabicLang["moreCategory"]
@@ -211,7 +292,13 @@ class ReadyProductsCategory extends StatelessWidget {
           ),
           CustomDivider(),
           SizedBox(height: 10),
-          SizedBox(height: 150, child: productCate)
+          Container(
+            margin: EdgeInsets.only(left: 15),
+            child: SizedBox(
+              height: 150,
+              child: productCate,
+            ),
+          )
         ],
       ),
     );

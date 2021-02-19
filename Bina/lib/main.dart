@@ -1,11 +1,25 @@
 import 'package:Bina/ConstFiles/routeStringVar.dart';
-import 'package:Bina/Model/Classes/LangStatus.dart';
+// import 'package:Bina/Model/Classes/LangStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'Model/Classes/Routers.dart';
+// import 'Model/Classes/Routers.dart';
 import 'Model/Classes/ThemeColor.dart';
+
+// Views
+import 'package:Bina/Views/splashScreen.dart';
+import 'package:Bina/Views/WelcomeIntroPage.dart';
+import 'package:Bina/Views/maino.dart';
+import 'package:Bina/Views/login.dart';
+import 'package:Bina/Views/signup.dart';
+import 'package:Bina/Views/moreCategories.dart';
+import 'package:Bina/Views/changeLang.dart';
+import 'package:Bina/Views/changeTheme.dart';
+import 'package:Bina/Views/products.dart';
+import 'package:Bina/Views/searchingResultPage.dart';
+import 'Views/discountProducts.dart';
+import 'Views/viewProducts.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,8 +64,22 @@ class _MyAppState extends State<MyApp> {
               : SystemUiOverlayStyle.dark);
           return MaterialApp(
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            onGenerateRoute: AppRouters.allRouters,
+            // onGenerateRoute: AppRouters.allRouters,
             initialRoute: splashScreen,
+            routes: {
+              splashScreen: (context) => SplashScreen(),
+              welcomeIntroPage: (context) => WelcomeIntroPage(),
+              maino: (context) => Maino(),
+              signup: (context) => Signup(),
+              login: (context) => Login(),
+              moreCategoriesPage: (context) => MoreCategories(),
+              changeLangPage: (context) => ChangeLang(),
+              changeThemePage: (context) => ChangeTheme(),
+              productsPage: (context) => ProductsPage(),
+              productViewPage: (context) => ProductView(),
+              searchResultPage: (context) => SearchResult(),
+              discountPage: (context) => DiscountedPage(),
+            },
           );
         },
       ),

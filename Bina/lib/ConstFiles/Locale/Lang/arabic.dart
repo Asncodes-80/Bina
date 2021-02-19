@@ -20,6 +20,7 @@ Map<String, String> arabicLang = {
   "home": "الصفحة الرئيسية",
   "search": "بحث",
   "searchBar": "بحث...",
+  "searchingProducts": "ابحث عن المنتج الذي تريده",
   "saved": "تم الحفظ",
   "profile": "الملف الشخصي",
   "emptyField": "بعض النماذج فارغة",
@@ -29,5 +30,16 @@ Map<String, String> arabicLang = {
   "welcomeTitle": "مرحبا",
   "welcomeSubTitle": "تسجیل الدخول إلى حسابك",
   "catergories": "التصنيفات",
-  "moreCategory": "أكثر"
+  "moreCategory": "أكثر",
+  "myBasket": "سلتك",
+  "favorite": "المنتجات المفضلة",
+  "discountTitle": "خصومات موسمية",
+  "discountSubtitle": "اطلب البضائع المخفضة الآن",
+  // Preferences
+  "themeChange": "مظهر داكن أو فاتح",
+  "titleThemeChange":
+      "إعدادات المظهر من أجل الاستخدام الأفضل الذي يفضله المستخدم",
+  "changeLanguage": "تغيير اللغة",
+  "appearanceTitle":
+      "إعدادات المظهر من أجل الاستخدام الأفضل الذي يفضله المستخدم"
 };

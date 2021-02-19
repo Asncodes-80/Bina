@@ -2,12 +2,14 @@ import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  const CustomText({this.text, this.fontSize, this.color, this.fw});
+  const CustomText(
+      {this.text, this.fontSize, this.color, this.fw, this.textAlign});
 
   final double fontSize;
   final text;
   final Color color;
   final FontWeight fw;
+  final textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomText extends StatelessWidget {
           fontSize: fontSize,
           color: color,
           fontWeight: fw),
-      textAlign: TextAlign.center,
+      textAlign: textAlign != null ? textAlign : TextAlign.center,
     );
   }
 }
