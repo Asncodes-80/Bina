@@ -62,7 +62,7 @@ class _ProductViewState extends State<ProductView> {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     productParam = ModalRoute.of(context).settings.arguments;
 
-    print(count);
+    // print(count);
 
     // print(productInfo[0]["id"]);
 
@@ -223,6 +223,38 @@ class _ProductViewState extends State<ProductView> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: [
+            FlatButton(
+              onPressed: () async {
+                var result = await saved.addSave(
+                  id: productInfo[0]["id"],
+                  img: productInfo[0]["image"],
+                  name_ar: productInfo[0]["name_ar"],
+                  name_kur: productInfo[0]["name_ku"],
+                  price: productInfo[0]["price"],
+                );
+                if (result) {
+                  showStatusInCaseOfFlush(
+                      context: context,
+                      icon: Icons.turned_in_not,
+                      iconColor: Colors.green,
+                      msg: "کالا ذخیره شد",
+                      title: "ذخیره کالا");
+                } else {
+                  showStatusInCaseOfFlush(
+                      context: context,
+                      icon: Icons.close,
+                      iconColor: Colors.red,
+                      msg: "مشکلی در ذخیره سازی پیش آمده است",
+                      title: "ذخیره کالا با مشکل مواجه شده است");
+                }
+              },
+              child: Icon(
+                Icons.turned_in_not,
+                color: Colors.black,
+              ),
+            ),
+          ],
           leading: Container(
             margin: EdgeInsets.all(10),
             child: FlatButton(

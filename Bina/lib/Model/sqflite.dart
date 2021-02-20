@@ -103,23 +103,68 @@ class UserBasket {
 
 class MySaved {
   Database database;
+  // Ini databsae
   void createSaved() async {
-    var db = await openDatabase("Bina.db");
-    print("LOG : $db");
+    await openDatabase("BinaSaved.db");
+    // print("LOG : $db");
     var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'db.db');
-    print("LOG : $path");
+    String path = join(databasesPath, 'dbSaved.db');
+    // print("LOG : $path");
     database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
-          "CREATE TABLE mySaved (id INTEGER PRIMARY KEY, img TEXT, name TEXT)");
+          "CREATE TABLE mySaved (id INTEGER PRIMARY KEY, img TEXT, name_ar TEXT, name_kur TEXT, price DECIMAL(10,2))");
     });
   }
 
-  Future<List<Map>> readMyBasket() async {
+  Future getDatabase() async {
+    var db = await openDatabase("BinaSaved.db");
+    // print("LOG : $db");
+    var databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'dbSaved.db');
+    // print("LOG : $path");
+    database = await openDatabase(path, version: 1,
+        onCreate: (Database db, int version) async {
+      await db.execute(
+          "CREATE TABLE mySaved (id INTEGER PRIMARY KEY, img TEXT, name_ar TEXT, name_kur TEXT, price DECIMAL(10,2))");
+    });
+    return database;
+  }
+
+  // Read From DataBase
+  Future<List<Map>> readMySaved() async {
     // For opening db
-    createSaved();
-    List<Map> mySavedList = await database.rawQuery("SELECT * FROM mySaved");
+    Database db = await getDatabase();
+
+    List<Map> mySavedList = await db.rawQuery("SELECT * FROM mySaved");
     return mySavedList;
+  }
+
+  // Adding a user basket
+  Future<bool> addSave({id, img, name_ar, name_kur, price}) async {
+    Database db = await getDatabase();
+
+    try {
+      await db.transaction((txn) async {
+        await txn.rawInsert(
+            "insert into mySaved values($id, '$img', '$name_ar', '$name_kur' , $price);");
+      });
+      return true;
+    } catch (e) {
+      print("ERROR LOG FROM SQFLIT INSERTION $e");
+      return false;
+    }
+  }
+
+  // Delete user product basket by product id
+  Future<bool> delSavedProduct({id}) async {
+    Database db = await getDatabase();
+    try {
+      await db.rawDelete("DELETE FROM mySaved WHERE id = $id");
+      return true;
+    } catch (e) {
+      print("ERROR LOG SQFLIT Delete Product $e");
+      return false;
+    }
   }
 }

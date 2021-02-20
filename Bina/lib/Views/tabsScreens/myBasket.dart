@@ -29,6 +29,8 @@ class MyBasket extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sumPricer = sumPrice is List ? "" : sumPrice;
+
     final basketList = ListView.builder(
       shrinkWrap: true,
       primary: false,
@@ -94,6 +96,25 @@ class MyBasket extends StatelessWidget {
 
     final baskets = productInBascket.isEmpty ? lottie : basketList;
 
+    final submitOrders = productInBascket.isEmpty
+        ? CustomText(
+            text: "شما کالایی را انتخاب نکرده اید",
+          )
+        : Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: MaterialButton(
+              onPressed: () => {},
+              minWidth: double.infinity,
+              height: 60,
+              color: actionCt,
+              child: CustomText(
+                fw: FontWeight.bold,
+                text: "مجموع $sumPricer دلار",
+                color: Colors.white,
+              ),
+            ),
+          );
+
     return Stack(
       children: [
         NestedScrollView(
@@ -152,20 +173,7 @@ class MyBasket extends StatelessWidget {
                 children: [
                   SizedBox(height: 20),
                   baskets,
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: MaterialButton(
-                      onPressed: () => {},
-                      minWidth: double.infinity,
-                      height: 60,
-                      color: actionCt,
-                      child: CustomText(
-                        fw: FontWeight.bold,
-                        text: "مجموع $sumPrice دلار",
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                  submitOrders,
                 ],
               ),
             ),
