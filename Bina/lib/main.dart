@@ -20,6 +20,7 @@ import 'package:Bina/Views/products.dart';
 import 'package:Bina/Views/searchingResultPage.dart';
 import 'Views/discountProducts.dart';
 import 'Views/viewProducts.dart';
+import 'package:Bina/Views/productInBasketView.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
               productViewPage: (context) => ProductView(),
               searchResultPage: (context) => SearchResult(),
               discountPage: (context) => DiscountedPage(),
+              productBasketView: (context) => ProductInBasketView(),
             },
           );
         },

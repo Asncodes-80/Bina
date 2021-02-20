@@ -12,3 +12,4 @@ const productsPage = "products";
 const productViewPage = "productView";
 const searchResultPage = "searchResult";
 const discountPage = "discountsProducts";
+const productBasketView = "productBasketView";

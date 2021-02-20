@@ -157,7 +157,7 @@ class ProductViewer extends StatelessWidget {
           SizedBox(height: 10),
           CustomText(
             text: "...$productName",
-            fontSize: 18,
+            fontSize: 16,
             fw: FontWeight.bold,
           ),
           SizedBox(height: 10),

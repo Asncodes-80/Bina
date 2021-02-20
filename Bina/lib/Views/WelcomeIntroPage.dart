@@ -4,10 +4,15 @@ import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:Bina/Views/welcomePageViews/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+// SQFLITE DB CLASSES
+UserBasket basket = UserBasket();
+MySaved saved = MySaved();
 
 int pageIndex;
 var _pageContoller = PageController();
@@ -109,10 +114,12 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
         duration: Duration(milliseconds: 600), curve: Curves.decelerate);
   }
 
-  void navigatedToMarket() {
+  void navigatedToMarket() async {
     // Set new value in firstVisit (key) of flutter secure storage
 
     // Create New Table SQL base for user in saving products
+    basket.createBasket();
+    saved.createSaved();
 
     Navigator.pushNamed(context, maino);
   }

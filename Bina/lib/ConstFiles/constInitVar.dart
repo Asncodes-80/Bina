@@ -1,6 +1,6 @@
 import 'package:hexcolor/hexcolor.dart';
 
-const mainFont = "IranSans";
+const mainFont = "kurdishUbuntu";
 
 // Colors
 HexColor mainBlue = HexColor("#4387EA");

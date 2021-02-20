@@ -1,21 +1,99 @@
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
+import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
+import 'package:Bina/Extracted/productInBasket.dart';
+import 'package:Bina/Extracted/productViewList.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+UserBasket myBasket = UserBasket();
 
 class MyBasket extends StatelessWidget {
   const MyBasket({
     this.themeChange,
     this.scrollController,
+    this.productInBascket,
+    this.sumPrice,
   });
 
   final DarkThemeProvider themeChange;
   final scrollController;
+  final List productInBascket;
+  final sumPrice;
 
   @override
   Widget build(BuildContext context) {
+    final basketList = ListView.builder(
+      shrinkWrap: true,
+      primary: false,
+      itemCount: productInBascket.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, productBasketView, arguments: {
+              "id": productInBascket[index]['id'],
+              "img": productInBascket[index]['img'],
+              "name_ar": productInBascket[index]['name_ar'],
+              "name_kur": productInBascket[index]['name_kur'],
+              "price": productInBascket[index]['price'],
+              "count": productInBascket[index]['count'],
+            });
+            // print("This is ${productInBascket[index]['name_kur']}");
+          },
+          child: Slidable(
+            actionPane: SlidableDrawerActionPane(),
+            actionExtentRatio: 0.25,
+            child: Container(
+                color: Colors.white,
+                child: ProductInBasket(
+                  themeChange: themeChange,
+                  productPrice: productInBascket[index]['price'],
+                  imgNetSource: productInBascket[index]['img'],
+                  productName: themeChange.langName
+                      ? productInBascket[index]['name_ar']
+                      : productInBascket[index]['name_kur'],
+                  count: productInBascket[index]['count'],
+                )),
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                caption: 'حذف',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () async {
+                  var delProc = await myBasket.delProductBasket(
+                      id: productInBascket[index]['id']);
+                  if (delProc)
+                    showStatusInCaseOfFlush(
+                        context: context,
+                        icon: Icons.delete,
+                        iconColor: Colors.green,
+                        msg: "محصول مورد نظر حذف شد",
+                        title: "حذف از سبد من");
+                  else {
+                    showStatusInCaseOfFlush(
+                        context: context,
+                        icon: Icons.close,
+                        iconColor: Colors.red,
+                        msg: "این کالا یک بار حذف شده است",
+                        title: "مشکلی در حذف کالا");
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    final lottie = Lottie.asset("assets/lottie/loading.json");
+
+    final baskets = productInBascket.isEmpty ? lottie : basketList;
+
     return Stack(
       children: [
         NestedScrollView(
@@ -73,6 +151,21 @@ class MyBasket extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 20),
+                  baskets,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: MaterialButton(
+                      onPressed: () => {},
+                      minWidth: double.infinity,
+                      height: 60,
+                      color: actionCt,
+                      child: CustomText(
+                        fw: FontWeight.bold,
+                        text: "مجموع $sumPrice دلار",
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

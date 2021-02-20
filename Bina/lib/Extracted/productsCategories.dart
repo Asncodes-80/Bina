@@ -45,7 +45,7 @@ class Categories extends StatelessWidget {
           CustomText(
             text: productName,
             color: Colors.white,
-            fontSize: 15,
+            fontSize: 12,
             fw: FontWeight.bold,
           )
         ],

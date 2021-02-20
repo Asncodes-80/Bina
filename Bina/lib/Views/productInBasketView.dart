@@ -13,74 +13,52 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:Bina/Extracted/customText.dart';
 
-// SQFLITE DB CLASSES
+// SQFLITE DB CLASSE
 UserBasket basket = UserBasket();
-MySaved saved = MySaved();
 
-Map<String, Object> productParam;
-Timer timer;
-ProductCategories pcs = ProductCategories();
-List productInfo = [];
+Map<String, Object> basketParam = {};
 int count = 1;
+int userCount = 1;
 
-class ProductView extends StatefulWidget {
+var productPrice = 0.0;
+
+class ProductInBasketView extends StatefulWidget {
   @override
-  _ProductViewState createState() => _ProductViewState();
+  _ProductInBasketViewState createState() => _ProductInBasketViewState();
 }
 
-class _ProductViewState extends State<ProductView> {
+class _ProductInBasketViewState extends State<ProductInBasketView> {
   @override
   void initState() {
-    productParam = {};
-    if (productInfo.isEmpty) {
-      timer = Timer.periodic(Duration(seconds: 2), (timer) {
-        findContentProductInfo();
-      });
-    }
-
-    findContentProductInfo();
     super.initState();
-  }
-
-  void findContentProductInfo() {
-    pcs
-        .getProductInfo(productionId: productParam['productId'])
-        .then((value) => setState(() => productInfo = value));
   }
 
   @override
   void dispose() {
-    productParam = {};
-    productInfo = [];
+    basketParam = {};
     count = 1;
-    timer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-    productParam = ModalRoute.of(context).settings.arguments;
+    basketParam = ModalRoute.of(context).settings.arguments;
 
-    print(count);
+    setState(() {
+      userCount = basketParam['count'];
+    });
 
-    // print(productInfo[0]["id"]);
+    // print(basketParam['count'] is int ? int : "String");
 
-    final productPrice =
-        productInfo.isEmpty ? 0 : double.parse(productInfo[0]['price']);
-    final productPriceWithCount = productPrice * count;
-    final productTitle = themeChange.langName
-        ? productInfo.isEmpty
-            ? ""
-            : productInfo[0]['name_ar']
-        : productInfo.isEmpty
-            ? ""
-            : productInfo[0]['name_ku'];
+    // final productPriceWithCount = productPrice * count;
+    final productTitle =
+        themeChange.langName ? basketParam['name_ar'] : basketParam['name_kur'];
 
     // Details
     final firstContainer = Container(
         width: double.infinity,
-        height: 200,
+        height: 250,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,12 +76,19 @@ class _ProductViewState extends State<ProductView> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 child: CustomText(
-                  text: "دلار $productPrice",
+                  text: "دلار ${basketParam['price']}",
                   color: Colors.green,
                   fontSize: 18,
                   fw: FontWeight.bold,
                 ),
               ),
+              CustomText(
+                text: "تعداد انتخاب قبلی $userCount",
+                color: Colors.green,
+                fontSize: 18,
+                fw: FontWeight.bold,
+              ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 textDirection: TextDirection.rtl,
@@ -129,7 +114,7 @@ class _ProductViewState extends State<ProductView> {
                     ),
                   ),
                   CustomText(
-                    text: "${count}",
+                    text: "$count",
                     color: Colors.green,
                     fontSize: 18,
                     fw: FontWeight.bold,
@@ -160,51 +145,6 @@ class _ProductViewState extends State<ProductView> {
           ),
         ));
 
-    final secondContainer = Container(
-      width: double.infinity,
-      height: 226,
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        color: mainBlue,
-        borderRadius: BorderRadius.circular(34.0),
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  CustomText(
-                    text: "توضیحات",
-                    color: Colors.white,
-                    fontSize: 20,
-                    fw: FontWeight.bold,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: CustomText(
-                color: Colors.white,
-                textAlign: TextAlign.right,
-                fontSize: 18,
-                text: themeChange.langName
-                    ? productInfo.isEmpty
-                        ? ""
-                        : productInfo[0]["description_ar"]
-                    : productInfo.isEmpty
-                        ? ""
-                        : productInfo[0]["description_ku"],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-
     final loadingLottie = Center(
       child: Lottie.asset("assets/lottie/loading.json"),
     );
@@ -218,8 +158,7 @@ class _ProductViewState extends State<ProductView> {
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             background: Image(
-              image: NetworkImage(
-                  productInfo.isEmpty ? "" : productInfo[0]['image']),
+              image: NetworkImage(basketParam['img']),
               fit: BoxFit.cover,
             ),
           ),
@@ -238,7 +177,7 @@ class _ProductViewState extends State<ProductView> {
           delegate: SliverChildBuilderDelegate(
               (context, index) => Container(
                     child: Column(
-                      children: [firstContainer, secondContainer],
+                      children: [firstContainer],
                     ),
                   ),
               childCount: 1),
@@ -247,9 +186,9 @@ class _ProductViewState extends State<ProductView> {
     );
 
     final productDetailsWidget =
-        productInfo.isEmpty ? loadingLottie : productDetails;
+        basketParam['name_ar'] != {} ? productDetails : loadingLottie;
 
-    final BottomCalculatorPrice = productInfo.isNotEmpty
+    final BottomCalculatorPrice = basketParam['name_ar'] != {}
         ? ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
@@ -264,7 +203,7 @@ class _ProductViewState extends State<ProductView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "${productPriceWithCount} دلار",
+                      text: "${basketParam['price']} دلار",
                       fw: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -279,43 +218,39 @@ class _ProductViewState extends State<ProductView> {
 
                         // print(productPriceWithCount);
 
-                        var result = await basket.addMyBasket(
-                          id: productInfo[0]["id"],
-                          img: productInfo[0]["image"],
-                          name_ar: productInfo[0]["name_ar"],
-                          name_kur: productInfo[0]["name_ku"],
-                          price: productInfo[0]["price"],
+                        var result = await basket.updateMyBasket(
+                          id: basketParam["id"],
                           count: count,
                         );
                         if (result) {
+                          Navigator.pop(context);
                           showStatusInCaseOfFlush(
                               context: context,
-                              icon: Icons.add,
+                              icon: Icons.edit,
                               iconColor: Colors.green,
-                              msg:
-                                  "محصول مورد نظر با موفقیت به سبد خرید شما اضافه شد",
+                              msg: "محصول شما ویرایش شد",
                               title: "عملیات موفقیت آمیز");
                         } else {
                           showStatusInCaseOfFlush(
                               context: context,
-                              icon: Icons.close,
+                              icon: Icons.edit,
                               iconColor: Colors.red,
-                              msg:
-                                  "برای تغییر در محصول خود به سبد محصولات مراجعه کنید",
-                              title:
-                                  "نمیتوان محصول تکراری را به سبد اضافه کنید");
+                              msg: "مشکلی در فرایند ویرایش محصول",
+                              title: "خطا");
                         }
                       },
                       color: actionCt,
                       height: 45,
+                      minWidth: 200,
                       child: Row(
                         children: [
                           CustomText(
-                            text: "افزودن به سبد من",
+                            text: "ویرایش در محصول",
                             color: Colors.white,
                             fw: FontWeight.bold,
                             fontSize: 15,
                           ),
+                          SizedBox(width: 20),
                           Icon(
                             Icons.add_shopping_cart_outlined,
                             color: Colors.white,
@@ -334,16 +269,3 @@ class _ProductViewState extends State<ProductView> {
         body: productDetailsWidget, bottomNavigationBar: BottomCalculatorPrice);
   }
 }
-
-// CustomText(
-// text: themeChange.langName
-//     ? productInfo.isEmpty
-//         ? ""
-//         : productInfo[0]['name_ar']
-//     : productInfo.isEmpty
-//         ? ""
-//         : productInfo[0]['name_ku'],
-// color: Colors.black,
-// fontSize: 20,
-//   fw: FontWeight.bold,
-// ),

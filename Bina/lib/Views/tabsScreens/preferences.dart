@@ -149,11 +149,15 @@ class PreferencesSettings extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: ListTile(
           onTap: changerFunction,
-          title:
-              Text(themeChange.langName ? arabicLang[item] : kurdishLang[item]),
-          subtitle: Text(themeChange.langName
-              ? arabicLang[titleItem]
-              : kurdishLang[titleItem]),
+          title: CustomText(
+              textAlign: TextAlign.right,
+              text:
+                  themeChange.langName ? arabicLang[item] : kurdishLang[item]),
+          subtitle: CustomText(
+              textAlign: TextAlign.right,
+              text: themeChange.langName
+                  ? arabicLang[titleItem]
+                  : kurdishLang[titleItem]),
           leading: Container(
             width: 50,
             height: 50,

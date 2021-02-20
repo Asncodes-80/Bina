@@ -9,6 +9,7 @@ import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/categories.dart';
 import 'package:Bina/Model/gettingDiscounts.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:Bina/Views/tabsScreens/favorite.dart';
 import 'package:Bina/Views/tabsScreens/home.dart';
 import 'package:Bina/Views/tabsScreens/myBasket.dart';
@@ -18,6 +19,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+
+// SQFLITE DB CLASSES
+UserBasket basket = UserBasket();
+MySaved saved = MySaved();
 
 int tabBarIndex;
 var _pageController;
@@ -34,6 +39,10 @@ List discountsProductLS = [];
 // search page
 String searchKey = "";
 List searchedProduct = [];
+
+// My Basket
+List myBasketProductList = [];
+List myBasketSumPrice = [];
 
 // for Controll of scrolling in stack page usage
 ScrollController homeScrollController;
@@ -56,7 +65,7 @@ class _MainoState extends State<Maino> {
     _search = ScrollController();
     homeScrollController.addListener(() => setState(() => {}));
 
-    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(Duration(seconds: 3), (timer) {
       findContent();
     });
     findContent();
@@ -72,7 +81,7 @@ class _MainoState extends State<Maino> {
     super.dispose();
   }
 
-  void findContent() {
+  void findContent() async {
     productCategories
         .getCats()
         .then((pC) => setState(() => productsCategoriesLs = pC));
@@ -83,6 +92,14 @@ class _MainoState extends State<Maino> {
     pcs
         .searchProducts(searchKey: searchKey)
         .then((value) => setState(() => searchedProduct = value));
+
+    // Show user Basket
+    final userBasket = await basket.readMyBasket();
+    setState(() => myBasketProductList = userBasket);
+
+    // Get all price
+    final gettingSumPrice = await basket.getSumOfProductPrice();
+    setState(() => myBasketSumPrice = gettingSumPrice);
   }
 
   // For all Scroller Stack
@@ -104,6 +121,10 @@ class _MainoState extends State<Maino> {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
     // print("This is DISCOUNTS ${discountsProductLS[0]["name_ar"]}");
+
+    // print(myBasketProductList[2]["price"]);
+
+    // print(myBasketSumPrice[0]['sum']);
 
     return WillPopScope(
       onWillPop: () =>
@@ -151,6 +172,9 @@ class _MainoState extends State<Maino> {
             MyBasket(
               themeChange: themeChange,
               scrollController: _search,
+              productInBascket: myBasketProductList,
+              sumPrice:
+                  myBasketSumPrice.isNotEmpty ? myBasketSumPrice[0]['sum'] : "",
             ),
             Saved(
               themeChange: themeChange,
@@ -188,6 +212,8 @@ class _MainoState extends State<Maino> {
               items: [
                 BottomNavigationBarItem(
                   title: CustomText(
+                      fontSize: 10,
+                      fw: FontWeight.bold,
                       text: themeChange.langName
                           ? arabicLang["home"]
                           : kurdishLang["home"]),
@@ -197,6 +223,8 @@ class _MainoState extends State<Maino> {
                 ),
                 BottomNavigationBarItem(
                   title: CustomText(
+                      fontSize: 10,
+                      fw: FontWeight.bold,
                       text: themeChange.langName
                           ? arabicLang["search"]
                           : kurdishLang["search"]),
@@ -210,7 +238,7 @@ class _MainoState extends State<Maino> {
                   ),
                   icon: CircleAvatar(
                     backgroundColor: mainBlue,
-                    radius: 30,
+                    radius: 25,
                     child: Icon(
                       Icons.shopping_cart_outlined,
                       color: Colors.white,
@@ -219,6 +247,8 @@ class _MainoState extends State<Maino> {
                 ),
                 BottomNavigationBarItem(
                   title: CustomText(
+                      fontSize: 10,
+                      fw: FontWeight.bold,
                       text: themeChange.langName
                           ? arabicLang["saved"]
                           : kurdishLang["saved"]),
@@ -226,6 +256,8 @@ class _MainoState extends State<Maino> {
                 ),
                 BottomNavigationBarItem(
                   title: CustomText(
+                      fontSize: 10,
+                      fw: FontWeight.bold,
                       text: themeChange.langName
                           ? arabicLang["profile"]
                           : kurdishLang["profile"]),
