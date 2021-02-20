@@ -92,7 +92,7 @@ class MyBasket extends StatelessWidget {
         );
       },
     );
-    final lottie = Lottie.asset("assets/lottie/loading.json");
+    final lottie = Lottie.asset("assets/lottie/emptyLoading.json");
 
     final baskets = productInBascket.isEmpty ? lottie : basketList;
 

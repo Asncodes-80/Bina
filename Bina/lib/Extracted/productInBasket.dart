@@ -50,7 +50,7 @@ class ProductInBasket extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: CustomText(
-                      text: "$count : تعداد",
+                      text: count != null ? "$count : تعداد" : "",
                       fontSize: 16,
                       color: Colors.green,
                       fw: FontWeight.bold,

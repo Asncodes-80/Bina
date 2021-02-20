@@ -44,6 +44,9 @@ List searchedProduct = [];
 List myBasketProductList = [];
 List myBasketSumPrice = [];
 
+// Saved
+List mySavedProductList = [];
+
 // for Controll of scrolling in stack page usage
 ScrollController homeScrollController;
 final double expandedHight = 150.0;
@@ -100,6 +103,10 @@ class _MainoState extends State<Maino> {
     // Get all price
     final gettingSumPrice = await basket.getSumOfProductPrice();
     setState(() => myBasketSumPrice = gettingSumPrice);
+
+    // Show user Saved Products
+    final userSaved = await saved.readMySaved();
+    setState(() => mySavedProductList = userSaved);
   }
 
   // For all Scroller Stack
@@ -179,6 +186,7 @@ class _MainoState extends State<Maino> {
             Saved(
               themeChange: themeChange,
               scrollController: _search,
+              userDidSave: mySavedProductList,
             ),
             Preferences(themeChange: themeChange, scrollController: _search),
           ],
