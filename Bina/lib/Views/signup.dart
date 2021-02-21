@@ -298,8 +298,9 @@ class _SignupState extends State<Signup> {
             //     "$fullname -  $username - $province, $phoneNo, $pass,  $rePass, $address $avatar");
             // print(formData);
             // print(_imgSource64);
+
             bool registerResult = await uRegister.userRegistration(
-                avatar: "",
+                avatar: avatar,
                 username: username,
                 fullname: fullname,
                 phoneNo: phoneNo,

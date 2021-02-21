@@ -13,10 +13,11 @@ class HomeShopping extends StatelessWidget {
   const HomeShopping(
       {@required this.productCategoriesList,
       @required this.themeChange,
+      this.username,
       this.homeScroller,
       this.exhight,
       this.onSearchSumbitKey});
-
+  final String username;
   final DarkThemeProvider themeChange;
   final ScrollController homeScroller;
   final productCategoriesList;
@@ -83,9 +84,11 @@ class HomeShopping extends StatelessWidget {
                               textDirection: TextDirection.rtl,
                               children: [
                                 CustomText(
-                                  text: themeChange.langName
-                                      ? arabicLang["welcomeSubTitle"]
-                                      : kurdishLang["welcomeSubTitle"],
+                                  text: username != null
+                                      ? username
+                                      : themeChange.langName
+                                          ? arabicLang["welcomeSubTitle"]
+                                          : kurdishLang["welcomeSubTitle"],
                                   fontSize: 18,
                                   color: Colors.white,
                                 )

@@ -82,13 +82,24 @@ class ApiAccess {
 
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["authorization"] = basicAuth;
+
+    // var formData = FormData.fromMap({
+    //   "user": uPK,
+    //   "full_name": fullname,
+    //   "phone_number": phone,
+    //   "province": province,
+    //   "address": address
+    // "profile_image":
+    //     await MultipartFile.fromFile(avatarImg.path, filename: "avatar.png")
+    // });
+    // Response res = await dio.post("$baseURL/account_infos/", data: formData);
     Response res = await dio.post("$baseURL/account_infos/", data: {
       "user": uPK,
       "full_name": fullname,
       "phone_number": phone,
       "province": province,
-      "address": address
-      // "profile_image": ""
+      "address": address,
+      // "profile_image": avatarImg
     });
     print("fuck");
 

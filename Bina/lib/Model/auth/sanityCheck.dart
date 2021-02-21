@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Bina/Model/Classes/ApiAccess.dart';
 import 'package:Bina/Model/Classes/userInfoLDS.dart';
+import 'package:dio/dio.dart';
 
 ApiAccess api = ApiAccess();
 SavingData LDS = SavingData();

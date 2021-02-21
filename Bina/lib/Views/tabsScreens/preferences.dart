@@ -10,13 +10,23 @@ class Preferences extends StatelessWidget {
   const Preferences({
     this.scrollController,
     @required this.themeChange,
+    this.fullname,
+    this.provinceName,
   });
 
+  final fullname;
+  final provinceName;
   final DarkThemeProvider themeChange;
   final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
+    final profileObject = fullname != null
+        ? SquareAvatar(
+            userNameLimited: fullname != null ? fullname[0] : "",
+            fullname: fullname != null ? fullname : "",
+          )
+        : SizedBox(height: 1);
     return Stack(
       children: [
         NestedScrollView(
@@ -76,10 +86,7 @@ class Preferences extends StatelessWidget {
                   SizedBox(height: 20),
 
                   // Square Avatar
-                  SquareAvatar(
-                    userNameLimited: "A",
-                    fullname: "Alireza Soltani Neshan",
-                  ),
+                  profileObject,
                   SizedBox(height: 40),
 
                   // Options

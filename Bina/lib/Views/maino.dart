@@ -5,7 +5,6 @@ import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/flusher.dart';
-import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/categories.dart';
 import 'package:Bina/Model/gettingDiscounts.dart';
@@ -17,6 +16,7 @@ import 'package:Bina/Views/tabsScreens/preferences.dart';
 import 'package:Bina/Views/tabsScreens/searching.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +35,15 @@ ProductCategories pcs = ProductCategories();
 // Home page vars
 List productsCategoriesLs = [];
 List discountsProductLS = [];
+// Local Data Account info
+String userId = "";
+String username = "";
+String avatar = "";
+String fullname = "";
+String phone = "";
+String address = "";
+String province_ar = "";
+String province_ku = "";
 
 // search page
 String searchKey = "";
@@ -85,6 +94,20 @@ class _MainoState extends State<Maino> {
   }
 
   void findContent() async {
+    gettingLocalData().then((local) {
+      setState(() {
+        userId = local["uId"];
+        username = local["username"];
+        avatar = local["avatar"];
+        fullname = local["fullname"];
+        phone = local["phone"];
+        address = local["address"];
+        province_ar = local["province_ar"];
+        province_ku = local["province_ku"];
+      });
+    });
+    print(username);
+
     productCategories
         .getCats()
         .then((pC) => setState(() => productsCategoriesLs = pC));
@@ -107,6 +130,29 @@ class _MainoState extends State<Maino> {
     // Show user Saved Products
     final userSaved = await saved.readMySaved();
     setState(() => mySavedProductList = userSaved);
+  }
+
+  Future<Map> gettingLocalData() async {
+    final lStorage = await FlutterSecureStorage();
+    final uId = await lStorage.read(key: "userId");
+    final username = await lStorage.read(key: "username");
+    final avatar = await lStorage.read(key: "avatar");
+    final fullname = await lStorage.read(key: "fullname");
+    final phone = await lStorage.read(key: "phone");
+    final address = await lStorage.read(key: "address");
+    final province_ar = await lStorage.read(key: "province_ar");
+    final province_ku = await lStorage.read(key: "province_ku");
+
+    return {
+      "uId": uId,
+      "username": username,
+      "avatar": avatar,
+      "fullname": fullname,
+      "phone": phone,
+      "address": address,
+      "province_ar": province_ar,
+      "province_ku": province_ku
+    };
   }
 
   // For all Scroller Stack
@@ -144,6 +190,7 @@ class _MainoState extends State<Maino> {
           onPageChanged: (index) => setState(() => tabBarIndex = index),
           children: [
             HomeShopping(
+              username: username,
               themeChange: themeChange,
               homeScroller: homeScrollController,
               exhight: expandedHight,
@@ -188,7 +235,12 @@ class _MainoState extends State<Maino> {
               scrollController: _search,
               userDidSave: mySavedProductList,
             ),
-            Preferences(themeChange: themeChange, scrollController: _search),
+            Preferences(
+              fullname: fullname,
+              provinceName: themeChange.langName ? province_ar : province_ku,
+              themeChange: themeChange,
+              scrollController: _search,
+            ),
           ],
         ),
         bottomNavigationBar: Directionality(
