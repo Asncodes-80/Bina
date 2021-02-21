@@ -9,19 +9,28 @@ import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Controllers/imageSourcePicker.dart';
 import 'package:Bina/Controllers/validator.dart';
 import 'package:Bina/Extracted/customText.dart';
+import 'package:Bina/Model/auth/sanityCheck.dart';
 import 'package:Bina/Model/gettingProvinces.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:Bina/Views/signupPageViews/level1.dart';
 import 'package:Bina/Views/signupPageViews/level2.dart';
 import 'package:Bina/Views/signupPageViews/level3.dart';
 import 'package:Bina/Views/signupPageViews/level4.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+// SQFLITE DB CLASSES
+UserBasket basket = UserBasket();
+MySaved saved = MySaved();
+
 // image settings for resize and ready to base64 Format
 ImgManipulate imgModifire = ImgManipulate();
+UserRegisteration uRegister = UserRegisteration();
 
 dynamic themeChange;
 int pageIndex = 0;
@@ -34,7 +43,7 @@ Timer timer;
 String fullname;
 String username;
 List provinceLs = [];
-var _provinceVal;
+int _provinceVal;
 var _provinceValSelected = "";
 File imgSource;
 
@@ -242,7 +251,7 @@ class _SignupState extends State<Signup> {
                   avatar: imgSource,
                   fullname: fullname,
                   username: username,
-                  province: _provinceValSelected,
+                  province: _provinceVal,
                   phoneNo: phoneNumber,
                   pass: password,
                   rePass: rePassword,
@@ -285,16 +294,40 @@ class _SignupState extends State<Signup> {
       if (pass.length > 6 && rePass.length > 6) {
         if (validatePassword && validateRePassword) {
           if (pass == rePass) {
-            // TODO FOR CONN WITH API
-            print(
-                "$fullname -  $username - $province, $phoneNo, $pass,  $rePass, $address");
-            var _imgSource64 = await imgModifire.img2Base64(img: avatar);
-            // Set new value in firstVisit (key) of flutter secure storage
+            // print(
+            //     "$fullname -  $username - $province, $phoneNo, $pass,  $rePass, $address $avatar");
+            // print(formData);
+            // print(_imgSource64);
+            bool registerResult = await uRegister.userRegistration(
+                avatar: "",
+                username: username,
+                fullname: fullname,
+                phoneNo: phoneNo,
+                password: pass,
+                repassword: rePass,
+                province: province,
+                address: address);
 
-            // Create New Table SQL base for user in saving products
-
-            // Navigator.pushNamed(context, maino);
-            // Navigator.popUntil(context, ModalRoute.withName(maino));
+            if (registerResult) {
+              basket.createBasket();
+              saved.createSaved();
+              final lSorage = FlutterSecureStorage();
+              await lSorage.write(key: "firstVisit", value: "ACTIVE");
+              // Check if first view app
+              var basketList = await basket.readMyBasket();
+              if (basketList.isEmpty) {
+                Navigator.pushNamed(context, maino);
+              } else {
+                Navigator.popUntil(context, ModalRoute.withName(maino));
+              }
+            } else {
+              showStatusInCaseOfFlush(
+                  context: context,
+                  icon: Icons.close,
+                  iconColor: Colors.red,
+                  msg: "مشکلی در ثبت نام شما پیش آمده است",
+                  title: "عملیات  ثبت نام با شکست مواجه شد");
+            }
           } else {
             showStatusInCaseOfFlush(
                 context: context,

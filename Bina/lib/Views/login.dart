@@ -2,17 +2,27 @@ import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
+import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/bottomBtn.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/textField.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/auth/sanityCheck.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+
+// SQFLITE DB CLASSES
+UserBasket basket = UserBasket();
+MySaved saved = MySaved();
 
 String username;
 String password;
 bool protectedPassword;
 IconData showMePass;
+
+UserLogin uLogin = UserLogin();
 
 class Login extends StatefulWidget {
   @override
@@ -122,10 +132,31 @@ class _LoginState extends State<Login> {
       ),
       bottomNavigationBar: BottomButton(
           color: actionCt,
-          onTapped: () {
-            // Create New Table SQL base for user in saving products
-            // basket.createBasket();
-            // saved.createSaved();
+          onTapped: () async {
+            bool loginResult = await uLogin.gettingLogin(
+                username: username, password: password);
+
+            if (loginResult) {
+              // Preparing local storage db
+              basket.createBasket();
+              saved.createSaved();
+              final lSorage = FlutterSecureStorage();
+              await lSorage.write(key: "firstVisit", value: "ACTIVE");
+              // Check if first view app
+              var basketList = await basket.readMyBasket();
+              if (basketList.isEmpty) {
+                Navigator.pushNamed(context, maino);
+              } else {
+                Navigator.popUntil(context, ModalRoute.withName(maino));
+              }
+            } else {
+              showStatusInCaseOfFlush(
+                  context: context,
+                  icon: Icons.close,
+                  iconColor: Colors.red,
+                  msg: "مشکلی در ورود شما پیش آمده است",
+                  title: "عملیات ورود با شکست مواجه شد");
+            }
           },
           text: themeChange.langName
               ? arabicLang["loginMian"]

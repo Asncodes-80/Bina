@@ -8,6 +8,7 @@ import 'package:Bina/Model/sqflite.dart';
 import 'package:Bina/Views/welcomePageViews/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 // SQFLITE DB CLASSES
@@ -116,6 +117,8 @@ class _WelcomeIntroPageState extends State<WelcomeIntroPage> {
 
   void navigatedToMarket() async {
     // Set new value in firstVisit (key) of flutter secure storage
+    final lSorage = FlutterSecureStorage();
+    await lSorage.write(key: "firstVisit", value: "ACTIVE");
 
     // Create New Table SQL base for user in saving products
     basket.createBasket();

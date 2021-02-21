@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:dio/dio.dart';
 
@@ -11,10 +13,41 @@ class ApiAccess {
   // by => going to body raw data json format username, password1, password2
   // start to post and will get a token as a user key
 
+  Future<String> basicAuthUserSubmissionFirst({username, pass, rePass}) async {
+    String adminUsername = "admin";
+    String adminPassword = "admin";
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$adminUsername:$adminPassword'));
+
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = basicAuth;
+    Response res = await dio.post("$baseURL/rest-auth/registration/", data: {
+      "username": username,
+      "password1": pass,
+      "password2": rePass,
+    });
+    print("This is $res");
+
+    return res.data["key"];
+  }
+
   // if key is not null next level is going
   // level 2
   // get Method => user : with your username in top and password in top with this endpoint https://bahoz.ir/rest-auth/user/
   // for getting our pk key from my new user that i register after afew seconds !!
+
+  // This Func called level 2 can be use in level 1 of user login!!
+  Future<int> basicAuthUserSubmissionSecond({username, pass}) async {
+    String basicUsername = username;
+    String basicPassword = pass;
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$basicUsername:$basicPassword'));
+    // print(dio.options.headers["Authorization"] = basicAuth);
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = basicAuth;
+    Response res = await dio.get("$baseURL/rest-auth/user/");
+    return res.data["pk"];
+  }
 
   // if pk id is not null and next level
   // Level 3
@@ -28,6 +61,46 @@ class ApiAccess {
   //     "province": 2,
   //     "address": "askdnksndks"
   // }
+
+  Future<dynamic> basicAuthUserSubmissionThired(
+      {username,
+      pass,
+      int uPK,
+      fullname,
+      phone,
+      province,
+      address,
+      avatarImg}) async {
+    // print("$username / $pass");
+    // print("$uPK / $fullname");
+    // print("$phone / $province");
+    // print("$avatarImg");
+    String basicUsername = username;
+    String basicPassword = pass;
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$basicUsername:$basicPassword'));
+
+    dio.options.headers['content-Type'] = 'application/json';
+    dio.options.headers["authorization"] = basicAuth;
+    Response res = await dio.post("$baseURL/account_infos/", data: {
+      "user": uPK,
+      "full_name": fullname,
+      "phone_number": phone,
+      "province": province,
+      "address": address
+      // "profile_image": ""
+    });
+    print("fuck");
+
+    print(res.data);
+    return res.data;
+  }
+
+  // Level 4
+  Future<List<dynamic>> getttingUserAccountInfo({uPK}) async {
+    Response res = await dio.get("$baseURL/show_me_account_infos/?user=$uPK");
+    return res.data;
+  }
 
   // End of all registration
 
