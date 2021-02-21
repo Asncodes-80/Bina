@@ -80,7 +80,7 @@ class _ProductViewState extends State<ProductView> {
     // Details
     final firstContainer = Container(
         width: double.infinity,
-        height: 200,
+        height: 220,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -89,10 +89,11 @@ class _ProductViewState extends State<ProductView> {
         child: Container(
           margin: EdgeInsets.only(top: 30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 text: "$productTitle",
-                fontSize: 20,
+                fontSize: 18,
                 fw: FontWeight.bold,
               ),
               Container(

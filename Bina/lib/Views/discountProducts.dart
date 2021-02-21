@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/productViewList.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
@@ -123,6 +124,8 @@ class _DiscountedPageState extends State<DiscountedPage> {
                             child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   textDirection: TextDirection.rtl,
                                   children: [
                                     CustomText(
@@ -130,6 +133,13 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                           ? discountsProductLS[index]["name_ar"]
                                           : discountsProductLS[index]
                                               ["name_ku"],
+                                      fontSize: 18,
+                                      fw: FontWeight.bold,
+                                    ),
+                                    CustomText(
+                                      text:
+                                          "${discountsProductLS[index]["code_discount"]} : کد تخفیف  ",
+                                      color: Colors.grey[700],
                                       fontSize: 18,
                                       fw: FontWeight.bold,
                                     ),
@@ -149,22 +159,38 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                     var kurLen = discountsProductLS[index]
                                             ['products'][value]["name_ar"]
                                         .length;
-                                    return ProductViewList(
-                                      themeChange: themeChange,
-                                      imgNetSource: discountsProductLS[index]
-                                          ['products'][value]["image"],
-                                      productName: themeChange.langName
-                                          ? discountsProductLS[index]
-                                                  ['products'][value]["name_ar"]
-                                              .substring(
-                                                  0, arLen > 18 ? 18 : 10)
-                                          : discountsProductLS[index]
-                                              ['products'][value]["name_ku"],
-                                      // .substring(0, kurLen),
-                                      availablity: discountsProductLS[index]
-                                          ['products'][value]["available"],
-                                      productPrice: discountsProductLS[index]
-                                          ['products'][value]["price"],
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // print(discountsProductLS[index]
+                                        //     ['products'][value]["id"]);
+                                        Navigator.pushNamed(
+                                          context,
+                                          productViewPage,
+                                          arguments: {
+                                            "productId":
+                                                discountsProductLS[index]
+                                                    ['products'][value]["id"],
+                                          },
+                                        );
+                                      },
+                                      child: ProductViewList(
+                                        themeChange: themeChange,
+                                        imgNetSource: discountsProductLS[index]
+                                            ['products'][value]["image"],
+                                        productName: themeChange.langName
+                                            ? discountsProductLS[index]
+                                                        ['products'][value]
+                                                    ["name_ar"]
+                                                .substring(
+                                                    0, arLen > 18 ? 18 : 10)
+                                            : discountsProductLS[index]
+                                                ['products'][value]["name_ku"],
+                                        // .substring(0, kurLen),
+                                        availablity: discountsProductLS[index]
+                                            ['products'][value]["available"],
+                                        productPrice: discountsProductLS[index]
+                                            ['products'][value]["price"],
+                                      ),
                                     );
                                   },
                                 ),
