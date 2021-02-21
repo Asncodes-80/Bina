@@ -58,7 +58,7 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
     // Details
     final firstContainer = Container(
         width: double.infinity,
-        height: 250,
+        height: 290,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,

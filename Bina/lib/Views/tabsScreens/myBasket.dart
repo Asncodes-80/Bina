@@ -8,10 +8,12 @@ import 'package:Bina/Extracted/productInBasket.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 UserBasket myBasket = UserBasket();
+FlutterSecureStorage fss = FlutterSecureStorage();
 
 class MyBasket extends StatelessWidget {
   const MyBasket({
@@ -30,13 +32,18 @@ class MyBasket extends StatelessWidget {
   Widget build(BuildContext context) {
     final sumPricer = sumPrice is List ? "" : sumPrice;
 
-    void orderDecision() {
+    void orderDecision() async {
       // get user from Flutter secure storage
+      final username = await fss.read(key: "username");
       // If user is empty
-      // Navigated to login
-      Navigator.pushNamed(context, login);
+      if (username == null)
+        // Navigated to login
+        Navigator.pushNamed(context, login);
       // else
-      // Send all orders to Server
+      else {
+        // Send all orders to Server
+        print(productInBascket);
+      }
     }
 
     final basketList = ListView.builder(
