@@ -43,7 +43,8 @@ class ProductInBasket extends StatelessWidget {
               Column(
                 children: [
                   CustomText(
-                    text: "...$productName",
+                    text:
+                        "...${productName.length > 10 ? productName.substring(0, 10) : productName}",
                     fontSize: 16,
                     fw: FontWeight.bold,
                   ),

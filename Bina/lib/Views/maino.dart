@@ -131,7 +131,7 @@ class _MainoState extends State<Maino> {
 
     // print(myBasketProductList[2]["price"]);
 
-    print(myBasketSumPrice);
+    // print(myBasketSumPrice);
 
     return WillPopScope(
       onWillPop: () =>
