@@ -22,6 +22,7 @@ dependencies:
   # adaptive_action_sheet:
   # country_pickers: ^1.3.0
   # auto_animated: any
+  google_nav_bar: ^4.0.2
   flutter_slidable:
   sqflite: ^1.3.0
   geolocator: ^6.2.0

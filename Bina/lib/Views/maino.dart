@@ -17,7 +17,7 @@ import 'package:Bina/Views/tabsScreens/preferences.dart';
 import 'package:Bina/Views/tabsScreens/searching.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 // SQFLITE DB CLASSES
@@ -191,87 +191,74 @@ class _MainoState extends State<Maino> {
             Preferences(themeChange: themeChange, scrollController: _search),
           ],
         ),
-        bottomNavigationBar: ClipRRect(
-          borderRadius: BorderRadius.only(
-              // topLeft: Radius.circular(30),
-              // topRight: Radius.circular(30),
-              ),
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: mainBlue,
-              unselectedItemColor: Colors.grey,
-              selectedIconTheme: IconThemeData(color: mainBlue),
-              iconSize: 25,
-              unselectedIconTheme: IconThemeData(size: 23),
-              selectedFontSize: 14,
-              unselectedFontSize: 14,
-              currentIndex: tabBarIndex,
-              onTap: (indexValue) {
-                setState(() {
-                  tabBarIndex = indexValue;
-                  _pageController.animateToPage(tabBarIndex,
-                      duration: Duration(milliseconds: 3), curve: Curves.ease);
-                  // print(tabBarIndex);
-                });
-              },
-              items: [
-                BottomNavigationBarItem(
-                  title: CustomText(
-                      fontSize: 10,
-                      fw: FontWeight.bold,
+        bottomNavigationBar: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+            ]),
+            child: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                child: GNav(
+                  rippleColor: Colors.blue,
+                  hoverColor: Colors.blue[800],
+                  gap: 10,
+                  activeColor: Colors.white,
+                  iconSize: 20,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: Duration(milliseconds: 400),
+                  textStyle: TextStyle(
+                    fontSize: 9,
+                    fontFamily: mainFont,
+                    color: Colors.white,
+                  ),
+                  tabBackgroundColor: activeColor,
+                  tabs: [
+                    GButton(
+                      icon: Icons.home_filled,
                       text: themeChange.langName
                           ? arabicLang["home"]
-                          : kurdishLang["home"]),
-                  icon: Icon(
-                    Icons.home_filled,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  title: CustomText(
-                      fontSize: 10,
-                      fw: FontWeight.bold,
+                          : kurdishLang["home"],
+                    ),
+                    GButton(
+                      icon: Icons.search,
                       text: themeChange.langName
                           ? arabicLang["search"]
-                          : kurdishLang["search"]),
-                  icon: Icon(
-                    Icons.search,
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  title: Container(
-                    child: Text(""),
-                  ),
-                  icon: CircleAvatar(
-                    backgroundColor: mainBlue,
-                    radius: 25,
-                    child: Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
+                          : kurdishLang["search"],
                     ),
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  title: CustomText(
-                      fontSize: 10,
-                      fw: FontWeight.bold,
+                    GButton(
+                      icon: Icons.shopping_cart_outlined,
+                      text: themeChange.langName
+                          ? arabicLang["search"]
+                          : kurdishLang["search"],
+                    ),
+                    GButton(
+                      icon: Icons.turned_in_not,
                       text: themeChange.langName
                           ? arabicLang["saved"]
-                          : kurdishLang["saved"]),
-                  icon: Icon(Icons.turned_in_not),
-                ),
-                BottomNavigationBarItem(
-                  title: CustomText(
-                      fontSize: 10,
-                      fw: FontWeight.bold,
+                          : kurdishLang["saved"],
+                    ),
+                    GButton(
+                      icon: Icons.account_circle_outlined,
                       text: themeChange.langName
                           ? arabicLang["profile"]
-                          : kurdishLang["profile"]),
-                  icon: Icon(Icons.account_circle_outlined),
+                          : kurdishLang["profile"],
+                    ),
+                  ],
+                  selectedIndex: tabBarIndex,
+                  onTabChange: (indexValue) {
+                    setState(() {
+                      tabBarIndex = indexValue;
+                      _pageController.animateToPage(tabBarIndex,
+                          duration: Duration(milliseconds: 3),
+                          curve: Curves.ease);
+                      // print(tabBarIndex);
+                    });
+                  },
                 ),
-              ],
+              ),
             ),
           ),
         ),
