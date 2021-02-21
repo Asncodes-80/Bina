@@ -11,6 +11,8 @@ class InfoLevel1 extends StatelessWidget {
   const InfoLevel1(
       {this.darkTheme,
       this.langName,
+      this.initUsername,
+      this.onChangeUsername,
       this.initFullname,
       this.onChangeFullname,
       this.imgSource,
@@ -23,9 +25,11 @@ class InfoLevel1 extends StatelessWidget {
   final bool darkTheme;
   final bool langName;
   final String initFullname;
+  final String initUsername;
   final File imgSource;
   final Function pickImage;
   final Function onChangeFullname;
+  final Function onChangeUsername;
   final List provinces;
   final Function tapOnDropMenuItem;
   final List dropItem;
@@ -72,6 +76,18 @@ class InfoLevel1 extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 20),
+            TextFields(
+                initValue: initUsername,
+                lblText: "username",
+                // langName ? arabicLang["fullname"] : kurdishLang["fullname"],
+                keyType: TextInputType.name,
+                textFieldIcon: Icons.account_circle,
+                textInputType: false,
+                readOnly: false,
+                // errText:
+                //     emptyTextFieldErrEmail == null ? null : emptyTextFieldMsg,
+                onChangeText: onChangeUsername),
             SizedBox(height: 20),
             TextFields(
                 initValue: initFullname,

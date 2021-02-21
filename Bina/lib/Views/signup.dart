@@ -6,6 +6,7 @@ import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/Location.dart';
 import 'package:Bina/Controllers/flusher.dart';
+import 'package:Bina/Controllers/imageSourcePicker.dart';
 import 'package:Bina/Controllers/validator.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/gettingProvinces.dart';
@@ -19,6 +20,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+// image settings for resize and ready to base64 Format
+ImgManipulate imgModifire = ImgManipulate();
+
 dynamic themeChange;
 int pageIndex = 0;
 var _pageContoller;
@@ -28,6 +32,7 @@ Timer timer;
 
 // Level 1 var
 String fullname;
+String username;
 List provinceLs = [];
 var _provinceVal;
 var _provinceValSelected = "";
@@ -87,6 +92,7 @@ class _SignupState extends State<Signup> {
   void dispose() {
     pageIndex = 0;
     fullname = "";
+    username = "";
     imgSource = null;
     _provinceValSelected = "";
     phoneNumber = "";
@@ -152,6 +158,13 @@ class _SignupState extends State<Signup> {
       InfoLevel1(
         darkTheme: themeChange.darkTheme,
         langName: themeChange.langName,
+        initUsername: username,
+        onChangeUsername: (onChangeUsername) {
+          setState(() {
+            // emptyTextFieldErrPersonalCode = null;
+            username = onChangeUsername;
+          });
+        },
         initFullname: fullname,
         provinces: provinceLs != [] ? provinceLs : [],
         dropItem: provinceLs != [] ? dropItemList : [],
@@ -160,10 +173,10 @@ class _SignupState extends State<Signup> {
         pickImage: () {
           galleryViewer(ImageSource.gallery);
         },
-        onChangeFullname: (onChangeUsername) {
+        onChangeFullname: (onChangeFullname) {
           setState(() {
             // emptyTextFieldErrPersonalCode = null;
-            fullname = onChangeUsername;
+            fullname = onChangeFullname;
           });
         },
       ),
@@ -226,7 +239,9 @@ class _SignupState extends State<Signup> {
         bottomNavigationBar: BottomButton(
           onTapped: () => pageIndex == 3
               ? navigatedToMarket(
+                  avatar: imgSource,
                   fullname: fullname,
+                  username: username,
                   province: _provinceValSelected,
                   phoneNo: phoneNumber,
                   pass: password,
@@ -248,10 +263,18 @@ class _SignupState extends State<Signup> {
         duration: Duration(milliseconds: 600), curve: Curves.decelerate);
   }
 
-  void navigatedToMarket(
-      {fullname, province, phoneNo, String pass, String rePass, address}) {
+  Future<void> navigatedToMarket(
+      {avatar,
+      fullname,
+      username,
+      province,
+      phoneNo,
+      String pass,
+      String rePass,
+      address}) async {
     Validator validate = Validator();
     if (fullname != "" &&
+        username != "" &&
         province != "" &&
         phoneNo != "" &&
         pass != "" &&
@@ -264,7 +287,14 @@ class _SignupState extends State<Signup> {
           if (pass == rePass) {
             // TODO FOR CONN WITH API
             print(
-                "$fullname -  $province, $phoneNo, $pass,  $rePass, $address");
+                "$fullname -  $username - $province, $phoneNo, $pass,  $rePass, $address");
+            var _imgSource64 = await imgModifire.img2Base64(img: avatar);
+            // Set new value in firstVisit (key) of flutter secure storage
+
+            // Create New Table SQL base for user in saving products
+
+            // Navigator.pushNamed(context, maino);
+            // Navigator.popUntil(context, ModalRoute.withName(maino));
           } else {
             showStatusInCaseOfFlush(
                 context: context,
@@ -309,12 +339,5 @@ class _SignupState extends State<Signup> {
               : kurdishLang["emptyField"],
           title: "");
     }
-
-    // Set new value in firstVisit (key) of flutter secure storage
-
-    // Create New Table SQL base for user in saving products
-
-    // Navigator.pushNamed(context, maino);
-    Navigator.popUntil(context, ModalRoute.withName(maino));
   }
 }

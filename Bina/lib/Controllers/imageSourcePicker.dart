@@ -13,7 +13,7 @@ class ImgManipulate {
   //   imgS = image;
   // }
 
-  Future<String> img2Base64(img) async {
+  Future<String> img2Base64({img}) async {
     try {
       if (img != null) {
         // Ready for resize image to low and middle quality
