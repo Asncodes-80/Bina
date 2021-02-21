@@ -28,7 +28,7 @@ class BottomButton extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white,
                       fontFamily: mainFont,
-                      fontSize: bottomBtnSize,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold),
                 ),
                 Icon(

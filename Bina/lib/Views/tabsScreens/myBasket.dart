@@ -5,7 +5,6 @@ import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/productInBasket.dart';
-import 'package:Bina/Extracted/productViewList.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,15 @@ class MyBasket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sumPricer = sumPrice is List ? "" : sumPrice;
+
+    void orderDecision() {
+      // get user from Flutter secure storage
+      // If user is empty
+      // Navigated to login
+      Navigator.pushNamed(context, login);
+      // else
+      // Send all orders to Server
+    }
 
     final basketList = ListView.builder(
       shrinkWrap: true,
@@ -103,14 +111,25 @@ class MyBasket extends StatelessWidget {
         : Container(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: MaterialButton(
-              onPressed: () => {},
+              onPressed: () => orderDecision(),
               minWidth: double.infinity,
               height: 60,
               color: actionCt,
-              child: CustomText(
-                fw: FontWeight.bold,
-                text: "مجموع $sumPricer دلار",
-                color: Colors.white,
+              child: Row(
+                textDirection: TextDirection.rtl,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    fw: FontWeight.bold,
+                    text: "خرید",
+                    color: Colors.white,
+                  ),
+                  CustomText(
+                    fw: FontWeight.bold,
+                    text: "مجموع $sumPricer دلار",
+                    color: Colors.white,
+                  ),
+                ],
               ),
             ),
           );
