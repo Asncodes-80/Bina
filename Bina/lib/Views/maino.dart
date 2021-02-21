@@ -200,7 +200,7 @@ class _MainoState extends State<Maino> {
             child: SafeArea(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                 child: GNav(
                   rippleColor: Colors.blue,
                   hoverColor: Colors.blue[800],

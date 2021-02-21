@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Bina/ConstFiles/Locale/Lang/arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/Location.dart';
 import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Controllers/validator.dart';
@@ -314,5 +315,6 @@ class _SignupState extends State<Signup> {
     // Create New Table SQL base for user in saving products
 
     // Navigator.pushNamed(context, maino);
+    Navigator.popUntil(context, ModalRoute.withName(maino));
   }
 }
