@@ -106,7 +106,7 @@ class _MainoState extends State<Maino> {
         province_ku = local["province_ku"];
       });
     });
-    print(username);
+    // print(username);
 
     productCategories
         .getCats()
@@ -226,6 +226,7 @@ class _MainoState extends State<Maino> {
             MyBasket(
               themeChange: themeChange,
               scrollController: _search,
+              userId: userId,
               productInBascket: myBasketProductList,
               sumPrice:
                   myBasketSumPrice.isNotEmpty ? myBasketSumPrice[0]['sum'] : "",

@@ -5,6 +5,7 @@ import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/productInBasket.dart';
+import 'package:Bina/Model/Classes/ApiAccess.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
@@ -14,23 +15,65 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 UserBasket myBasket = UserBasket();
 FlutterSecureStorage fss = FlutterSecureStorage();
+ApiAccess api = ApiAccess();
 
 class MyBasket extends StatelessWidget {
   const MyBasket({
     this.themeChange,
     this.scrollController,
+    this.userId,
     this.productInBascket,
     this.sumPrice,
   });
 
   final DarkThemeProvider themeChange;
   final scrollController;
+  final userId;
   final List productInBascket;
   final sumPrice;
 
   @override
   Widget build(BuildContext context) {
     final sumPricer = sumPrice is List ? "" : sumPrice;
+
+    void preparingOrders({List productLs, userId}) async {
+      productLs.forEach((basket) async {
+        // print("$userId");
+        // print("${basket['id']}");
+        // print("${basket['count']}");
+        // print("${basket['count'] * basket['price']}");
+        var userIdOrder = userId;
+        var productId = basket['id'];
+        var count = basket['count'];
+        var price = basket['price'];
+        var sumPriceByCount = count * price;
+
+        try {
+          await api.sendingUserOders(
+            userId: userIdOrder,
+            productId: productId,
+            productCount: count,
+            sum: sumPriceByCount,
+          );
+        } catch (e) {
+          showStatusInCaseOfFlush(
+              context: context,
+              icon: Icons.close,
+              iconColor: Colors.red,
+              msg: "نمیتوان داده ای اضافه کرد",
+              title: "ارسال ناموفق");
+        }
+      });
+      // print(listChecker);
+      // Deleting all product
+      await myBasket.refreshBasketByEmpty();
+      showStatusInCaseOfFlush(
+          context: context,
+          icon: Icons.send,
+          iconColor: Colors.green,
+          msg: "کالاهای شما با موفقیت به سفارشات ارسال شد",
+          title: "ارسال موفق");
+    }
 
     void orderDecision() async {
       // get user from Flutter secure storage
@@ -42,7 +85,7 @@ class MyBasket extends StatelessWidget {
       // else
       else {
         // Send all orders to Server
-        print(productInBascket);
+        preparingOrders(productLs: productInBascket, userId: userId);
       }
     }
 

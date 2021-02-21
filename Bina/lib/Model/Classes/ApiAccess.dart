@@ -166,4 +166,13 @@ class ApiAccess {
         await dio.get("$baseURL/search_products/?search=$searchKey");
     return productSearched.data;
   }
+
+  Future<void> sendingUserOders({userId, productId, productCount, sum}) async {
+    await dio.post("$baseURL/orders/", data: {
+      "user": userId,
+      "product": productId,
+      "count": productCount,
+      "sum": sum
+    });
+  }
 }

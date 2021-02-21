@@ -99,6 +99,18 @@ class UserBasket {
       return false;
     }
   }
+
+  // Del * product in basket
+  Future<bool> refreshBasketByEmpty() async {
+    Database db = await getDatabase();
+    try {
+      await db.rawDelete("DELETE FROM myBasket");
+      return true;
+    } catch (e) {
+      print("ERROR LOG SQFLIT Delete Product $e");
+      return false;
+    }
+  }
 }
 
 class MySaved {

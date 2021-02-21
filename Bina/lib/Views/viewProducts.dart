@@ -33,7 +33,7 @@ class _ProductViewState extends State<ProductView> {
   void initState() {
     productParam = {};
     if (productInfo.isEmpty) {
-      timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      timer = Timer.periodic(Duration(seconds: 1), (timer) {
         findContentProductInfo();
       });
     }
