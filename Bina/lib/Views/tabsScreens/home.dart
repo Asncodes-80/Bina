@@ -110,7 +110,8 @@ class HomeShopping extends StatelessWidget {
                             // TODO (Sreach Case will go to searching page)
                             onSubmitted: onSearchSumbitKey,
                             decoration: InputDecoration(
-                              hintStyle: TextStyle(fontSize: 17),
+                              hintStyle:
+                                  TextStyle(fontSize: 17, fontFamily: mainFont),
                               hintText: themeChange.langName
                                   ? arabicLang["searchBar"]
                                   : kurdishLang["searchBar"],
