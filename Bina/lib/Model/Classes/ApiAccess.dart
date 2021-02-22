@@ -175,4 +175,9 @@ class ApiAccess {
       "sum": sum
     });
   }
+
+  Future<dynamic> gettingOrderLengthByUserId({uId}) async {
+    Response res = await dio.get("$baseURL/orders/?user=$uId");
+    return res.data.length;
+  }
 }

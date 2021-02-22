@@ -35,8 +35,9 @@ class MyBasket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sumPricer = sumPrice is List ? "" : sumPrice;
-
     void preparingOrders({List productLs, userId}) async {
+      dynamic firstLen = await api.gettingOrderLengthByUserId(uId: userId);
+
       productLs.forEach((basket) async {
         // print("$userId");
         // print("${basket['id']}");
@@ -64,15 +65,26 @@ class MyBasket extends StatelessWidget {
               title: "ارسال ناموفق");
         }
       });
-      // print(listChecker);
-      // Deleting all product
-      await myBasket.refreshBasketByEmpty();
-      showStatusInCaseOfFlush(
-          context: context,
-          icon: Icons.send,
-          iconColor: Colors.green,
-          msg: "کالاهای شما با موفقیت به سفارشات ارسال شد",
-          title: "ارسال موفق");
+      dynamic lastLen = await api.gettingOrderLengthByUserId(uId: userId);
+
+      if (lastLen > firstLen) {
+// print(listChecker);
+        // Deleting all product
+        await myBasket.refreshBasketByEmpty();
+        showStatusInCaseOfFlush(
+            context: context,
+            icon: Icons.send,
+            iconColor: Colors.green,
+            msg: "کالاهای شما با موفقیت به سفارشات ارسال شد",
+            title: "ارسال موفق");
+      } else {
+        showStatusInCaseOfFlush(
+            context: context,
+            icon: Icons.send,
+            iconColor: Colors.green,
+            msg: "ارسال سفارش ها با مشکل مواجه شده است",
+            title: "ارسال ناموفق");
+      }
     }
 
     void orderDecision() async {

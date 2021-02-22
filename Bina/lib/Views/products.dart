@@ -29,7 +29,7 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(() => setState(() => {}));
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       findContent();
     });
     findContent();
