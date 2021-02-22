@@ -52,7 +52,7 @@ class ChooseLang extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              "assets/images/temporary.png",
+              "assets/images/oM.jpg",
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
