@@ -12,7 +12,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
+      width: 140,
       height: 140,
       margin: EdgeInsets.symmetric(horizontal: 7),
       decoration: BoxDecoration(

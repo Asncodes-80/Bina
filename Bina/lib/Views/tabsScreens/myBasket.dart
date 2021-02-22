@@ -122,16 +122,16 @@ class MyBasket extends StatelessWidget {
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
             child: Container(
-                color: Colors.white,
+                // color: Colors.white,
                 child: ProductInBasket(
-                  themeChange: themeChange,
-                  productPrice: productInBascket[index]['price'],
-                  imgNetSource: productInBascket[index]['img'],
-                  productName: themeChange.langName
-                      ? productInBascket[index]['name_ar']
-                      : productInBascket[index]['name_kur'],
-                  count: productInBascket[index]['count'],
-                )),
+              themeChange: themeChange,
+              productPrice: productInBascket[index]['price'],
+              imgNetSource: productInBascket[index]['img'],
+              productName: themeChange.langName
+                  ? productInBascket[index]['name_ar']
+                  : productInBascket[index]['name_kur'],
+              count: productInBascket[index]['count'],
+            )),
             secondaryActions: <Widget>[
               IconSlideAction(
                 caption: 'حذف',
@@ -242,7 +242,7 @@ class MyBasket extends StatelessWidget {
           },
           body: Container(
             decoration: BoxDecoration(
-              color: lightBgColor,
+              color: themeChange.darkTheme ? darkBgColor : lightBgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(34),
                 topRight: Radius.circular(34),

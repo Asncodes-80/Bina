@@ -61,7 +61,7 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
         height: 290,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
           borderRadius: BorderRadius.circular(34.0),
         ),
         child: Container(
@@ -196,7 +196,7 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
             ),
             child: Container(
               height: 85,
-              color: Colors.white,
+              color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
                 child: Row(

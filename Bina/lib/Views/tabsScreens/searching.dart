@@ -40,6 +40,7 @@ class Search extends StatelessWidget {
           // print(productsLs[index]['id']);
         },
         child: ProductViewer(
+          themeChange: themeChange,
           productImg: searchResult[index]['image'],
           productName: searchResult.isEmpty
               ? ""
@@ -99,7 +100,9 @@ class Search extends StatelessWidget {
                         margin:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: themeChange.darkTheme
+                              ? darkObjBgColor
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: TextField(
@@ -125,7 +128,7 @@ class Search extends StatelessWidget {
           },
           body: Container(
             decoration: BoxDecoration(
-              color: lightBgColor,
+              color: themeChange.darkTheme ? darkBgColor : lightBgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(34),
                 topRight: Radius.circular(34),

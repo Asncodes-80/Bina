@@ -1,3 +1,4 @@
+import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class ProductInBasket extends StatelessWidget {
       width: double.infinity,
       height: 122,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+          color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
+          borderRadius: BorderRadius.circular(15)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

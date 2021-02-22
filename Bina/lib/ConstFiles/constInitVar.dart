@@ -12,6 +12,7 @@ HexColor activeColor = HexColor("#4387EA");
 // MAIN
 HexColor lightBgColor = HexColor("#F4F5F7");
 HexColor darkBgColor = HexColor("#000000");
+HexColor darkObjBgColor = HexColor("#383838");
 HexColor productsBgColor = HexColor("#85B5FF");
 
 // Preferencs Colors

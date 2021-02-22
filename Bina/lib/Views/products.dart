@@ -100,7 +100,7 @@ class _ProductsPageState extends State<ProductsPage> {
             },
             body: Container(
               decoration: BoxDecoration(
-                color: lightBgColor,
+                color: themeChange.darkTheme ? darkBgColor : lightBgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
@@ -128,10 +128,13 @@ class _ProductsPageState extends State<ProductsPage> {
 class ProductViewer extends StatelessWidget {
   const ProductViewer({
     this.productImg,
+    this.themeChange,
     this.productName,
     this.productAvailable,
     this.productPrice,
   });
+  final DarkThemeProvider themeChange;
+
   final String productImg;
   final String productName;
   final bool productAvailable;
@@ -139,12 +142,13 @@ class ProductViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(themeChange.darkTheme);
     return Container(
       width: 180,
       height: 250,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -209,6 +213,7 @@ class ProductsInGrid extends StatelessWidget {
           // print(productsLs[index]['id']);
         },
         child: ProductViewer(
+          themeChange: themeChange,
           productImg: productsLs[index]['image'],
           productName: productsLs.isEmpty
               ? ""

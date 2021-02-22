@@ -247,9 +247,11 @@ class _MainoState extends State<Maino> {
         bottomNavigationBar: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-            ]),
+            decoration: BoxDecoration(
+                color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
+                boxShadow: [
+                  BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+                ]),
             child: SafeArea(
               child: Padding(
                 padding:

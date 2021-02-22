@@ -32,7 +32,7 @@ class Saved extends StatelessWidget {
           actionPane: SlidableDrawerActionPane(),
           actionExtentRatio: 0.25,
           child: Container(
-              color: Colors.white,
+              color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
               child: ProductInBasket(
                 themeChange: themeChange,
                 productPrice: userDidSave[index]['price'],
@@ -127,7 +127,7 @@ class Saved extends StatelessWidget {
           },
           body: Container(
             decoration: BoxDecoration(
-              color: lightBgColor,
+              color: themeChange.darkTheme ? darkBgColor : lightBgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(34),
                 topRight: Radius.circular(34),

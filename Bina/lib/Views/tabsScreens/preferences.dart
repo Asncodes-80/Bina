@@ -73,7 +73,7 @@ class Preferences extends StatelessWidget {
           },
           body: Container(
             decoration: BoxDecoration(
-              color: lightBgColor,
+              color: themeChange.darkTheme ? darkBgColor : lightBgColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(34),
                 topRight: Radius.circular(34),
@@ -95,7 +95,8 @@ class Preferences extends StatelessWidget {
                     height: 210,
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color:
+                          themeChange.darkTheme ? darkObjBgColor : Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -211,7 +212,6 @@ class SquareAvatar extends StatelessWidget {
         CustomText(
           text: fullname,
           fontSize: 18,
-          color: Colors.black,
         ),
         GestureDetector(
           // Preferences Settings

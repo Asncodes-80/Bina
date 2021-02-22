@@ -115,7 +115,7 @@ class _MoreCategoriesState extends State<MoreCategories> {
             },
             body: Container(
               decoration: BoxDecoration(
-                color: lightBgColor,
+                color: themeChange.darkTheme ? darkBgColor : lightBgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),

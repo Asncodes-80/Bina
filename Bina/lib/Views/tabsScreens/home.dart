@@ -103,7 +103,9 @@ class HomeShopping extends StatelessWidget {
                           margin: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: themeChange.darkTheme
+                                ? darkObjBgColor
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: TextField(
@@ -129,7 +131,7 @@ class HomeShopping extends StatelessWidget {
             },
             body: Container(
               decoration: BoxDecoration(
-                color: lightBgColor,
+                color: themeChange.darkTheme ? darkBgColor : lightBgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
@@ -256,11 +258,11 @@ class ReadyProductsCategory extends StatelessWidget {
     final productCate = pcl.isEmpty ? takeLottieLoading : loadCategory;
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       width: double.infinity,
       height: 265,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
         borderRadius: BorderRadius.circular(34),
       ),
       child: Column(
