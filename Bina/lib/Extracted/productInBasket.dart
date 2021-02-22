@@ -44,7 +44,7 @@ class ProductInBasket extends StatelessWidget {
                 children: [
                   CustomText(
                     text:
-                        "...${productName.length > 10 ? productName.substring(0, 10) : productName}",
+                        "...${productName.length < 28 ? productName : productName.substring(0, 28)}",
                     fontSize: 16,
                     fw: FontWeight.bold,
                   ),
