@@ -54,8 +54,6 @@ class _DiscountedPageState extends State<DiscountedPage> {
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
-    print("sd");
-
     return Scaffold(
       backgroundColor: mainBlue,
       body: Stack(
@@ -101,7 +99,7 @@ class _DiscountedPageState extends State<DiscountedPage> {
             },
             body: Container(
               decoration: BoxDecoration(
-                color: lightBgColor,
+                color: themeChange.darkTheme ? darkBgColor : lightBgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),
