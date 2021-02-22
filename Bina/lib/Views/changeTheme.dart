@@ -1,3 +1,6 @@
+import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
+import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
+import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
 import 'package:flutter/material.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -25,7 +28,12 @@ class _ChangeThemeState extends State<ChangeTheme> {
                     onChanged: (bool value) => setState(() {
                           themeChange.darkTheme = value;
                         }),
-                    title: Text("sdsd")),
+                    title: CustomText(
+                      textAlign: TextAlign.right,
+                      text: themeChange.langName
+                          ? arabicLang["themeChange"]
+                          : kurdishLang["themeChange"],
+                    )),
               )
             ],
           ),
