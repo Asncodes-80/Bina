@@ -133,7 +133,8 @@ class _SignupState extends State<Signup> {
 
     // Pick IMAGE
     Future galleryViewer(ImageSource changeType) async {
-      final image = await ImagePicker.pickImage(source: changeType);
+      final image = await ImagePicker.pickImage(
+          source: changeType, imageQuality: 50, maxHeight: 500, maxWidth: 500);
       setState(() {
         imgSource = image;
       });

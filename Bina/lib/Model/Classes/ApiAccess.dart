@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:dio/dio.dart';
@@ -75,6 +76,7 @@ class ApiAccess {
     // print("$uPK / $fullname");
     // print("$phone / $province");
     // print("$avatarImg");
+
     String basicUsername = username;
     String basicPassword = pass;
     String basicAuth =
@@ -101,7 +103,6 @@ class ApiAccess {
       "address": address,
       // "profile_image": avatarImg
     });
-    print("fuck");
 
     print(res.data);
     return res.data;

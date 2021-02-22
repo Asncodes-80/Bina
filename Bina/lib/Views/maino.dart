@@ -14,6 +14,7 @@ import 'package:Bina/Views/tabsScreens/home.dart';
 import 'package:Bina/Views/tabsScreens/myBasket.dart';
 import 'package:Bina/Views/tabsScreens/preferences.dart';
 import 'package:Bina/Views/tabsScreens/searching.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -69,10 +70,18 @@ class Maino extends StatefulWidget {
 }
 
 class _MainoState extends State<Maino> {
+  String _connectionStatus = 'Un';
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
   @override
   void initState() {
+    // Initialize Connection Subscription
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
     tabBarIndex = 0;
-    _pageController = PageController();
+    _pageController = PageController(keepPage: true);
     homeScrollController = ScrollController();
     _search = ScrollController();
     homeScrollController.addListener(() => setState(() => {}));
@@ -89,6 +98,10 @@ class _MainoState extends State<Maino> {
     homeScrollController.dispose();
     searchedProduct = [];
     _search.dispose();
+    _pageController.dispose();
+    // Close init
+    _connectivitySubscription.cancel();
+
     timer.cancel();
     super.dispose();
   }
@@ -130,6 +143,40 @@ class _MainoState extends State<Maino> {
     // Show user Saved Products
     final userSaved = await saved.readMySaved();
     setState(() => mySavedProductList = userSaved);
+  }
+
+  // Checker Function internet connection
+  Future<void> initConnectivity() async {
+    ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print(e.toString());
+    }
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+        break;
+      case ConnectivityResult.mobile:
+        break;
+      case ConnectivityResult.none:
+        showStatusInCaseOfFlush(
+            context: context,
+            title: "connectionFailedTitle",
+            msg: "connectionFailed",
+            iconColor: Colors.blue,
+            icon: Icons.wifi_off_rounded);
+        break;
+      default:
+        break;
+    }
   }
 
   Future<Map> gettingLocalData() async {
