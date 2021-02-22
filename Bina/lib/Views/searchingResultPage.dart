@@ -75,6 +75,7 @@ class _SearchResultState extends State<SearchResult> {
           // print(productsLs[index]['id']);
         },
         child: ProductViewer(
+          themeChange: themeChange,
           productImg: searchProduct[index]['image'],
           productName: searchProduct.isEmpty
               ? ""

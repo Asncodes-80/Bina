@@ -58,7 +58,7 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
     // Details
     final firstContainer = Container(
         width: double.infinity,
-        height: 290,
+        height: 300,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
@@ -67,11 +67,15 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
         child: Container(
           margin: EdgeInsets.only(top: 30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              CustomText(
-                text: "$productTitle",
-                fontSize: 20,
-                fw: FontWeight.bold,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                child: CustomText(
+                  text: "$productTitle",
+                  fontSize: 20,
+                  fw: FontWeight.bold,
+                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),

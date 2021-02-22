@@ -179,4 +179,16 @@ class MySaved {
       return false;
     }
   }
+
+  // Del * product in Saved
+  Future<bool> refreshSavedByEmpty() async {
+    Database db = await getDatabase();
+    try {
+      await db.rawDelete("DELETE FROM mySaved");
+      return true;
+    } catch (e) {
+      print("ERROR LOG SQFLIT Delete Product $e");
+      return false;
+    }
+  }
 }

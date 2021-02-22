@@ -1,10 +1,18 @@
+import 'dart:io';
+
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
+import 'package:Bina/Model/sqflite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+UserBasket myBasket = UserBasket();
+MySaved mySaved = MySaved();
 
 class Preferences extends StatelessWidget {
   const Preferences({
@@ -27,6 +35,77 @@ class Preferences extends StatelessWidget {
             fullname: fullname != null ? fullname : "",
           )
         : SizedBox(height: 1);
+
+    final loginBtn = fullname != null
+        ? Container(
+            margin: EdgeInsets.symmetric(vertical: 20),
+            child: FlatButton(
+              onPressed: () => Alert(
+                context: context,
+                type: AlertType.warning,
+                title: "می خواهید از حساب خود خارج شوید؟",
+                desc:
+                    "برای خروج از حساب خود بر روی دکمه بلی بفشارید و برای راه اندازی اولیه از برنامه خارج خواهید شد",
+                style: AlertStyle(
+                    backgroundColor:
+                        themeChange.darkTheme ? darkBar : Colors.white,
+                    titleStyle: TextStyle(
+                      fontFamily: mainFont,
+                    ),
+                    descStyle: TextStyle(fontFamily: mainFont)),
+                buttons: [
+                  DialogButton(
+                    child: Text(
+                      "بلی",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: mainFont),
+                    ),
+                    onPressed: () async {
+                      final lStorage = FlutterSecureStorage();
+                      await lStorage.deleteAll();
+                      await myBasket.refreshBasketByEmpty();
+                      await mySaved.refreshSavedByEmpty();
+                      exit(0);
+                    },
+                    width: 120,
+                  ),
+                  DialogButton(
+                    child: Text(
+                      "خیر",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: mainFont),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    width: 120,
+                  )
+                ],
+              ).show(),
+              child: CustomText(
+                text: "Logout",
+                color: Colors.red,
+                fw: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          )
+        : Container(
+            margin: EdgeInsets.symmetric(vertical: 20),
+            child: FlatButton(
+                onPressed: () => Navigator.pushNamed(context, login),
+                color: Colors.green,
+                minWidth: 100,
+                height: 50,
+                child: CustomText(
+                  text: 'ورود',
+                  color: Colors.white,
+                  fontSize: 16,
+                  fw: FontWeight.bold,
+                )),
+          );
     return Stack(
       children: [
         NestedScrollView(
@@ -92,7 +171,7 @@ class Preferences extends StatelessWidget {
                   // Options
                   Container(
                     width: double.infinity,
-                    height: 210,
+                    height: 300,
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                       color:
@@ -100,6 +179,7 @@ class Preferences extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         PreferencesSettings(
                           themeChange: themeChange,
@@ -119,10 +199,11 @@ class Preferences extends StatelessWidget {
                           iconBgColor: appearanceBgColors,
                           changerFunction: () =>
                               Navigator.pushNamed(context, changeThemePage),
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  loginBtn,
                 ],
               ),
             ),

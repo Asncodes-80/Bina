@@ -131,14 +131,14 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                           ? discountsProductLS[index]["name_ar"]
                                           : discountsProductLS[index]
                                               ["name_ku"],
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fw: FontWeight.bold,
                                     ),
                                     CustomText(
                                       text:
                                           "${discountsProductLS[index]["code_discount"]} : کد تخفیف  ",
                                       color: Colors.grey[700],
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       fw: FontWeight.bold,
                                     ),
                                   ],
@@ -159,8 +159,6 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                         .length;
                                     return GestureDetector(
                                       onTap: () {
-                                        // print(discountsProductLS[index]
-                                        //     ['products'][value]["id"]);
                                         Navigator.pushNamed(
                                           context,
                                           productViewPage,
@@ -177,13 +175,9 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                             ['products'][value]["image"],
                                         productName: themeChange.langName
                                             ? discountsProductLS[index]
-                                                        ['products'][value]
-                                                    ["name_ar"]
-                                                .substring(
-                                                    0, arLen > 18 ? 18 : 10)
+                                                ['products'][value]["name_ar"]
                                             : discountsProductLS[index]
                                                 ['products'][value]["name_ku"],
-                                        // .substring(0, kurLen),
                                         availablity: discountsProductLS[index]
                                             ['products'][value]["available"],
                                         productPrice: discountsProductLS[index]

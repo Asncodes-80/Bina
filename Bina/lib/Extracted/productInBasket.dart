@@ -21,34 +21,35 @@ class ProductInBasket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
       width: double.infinity,
-      height: 122,
+      height: 160,
       decoration: BoxDecoration(
           color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
           borderRadius: BorderRadius.circular(15)),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
             textDirection: TextDirection.rtl,
             children: [
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                margin: EdgeInsets.symmetric(vertical: 15),
                 child: Image.network(
                   imgNetSource,
-                  fit: BoxFit.cover,
-                  width: 74,
-                  height: 74,
+                  // fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
                 ),
               ),
               Column(
                 children: [
-                  CustomText(
-                    text:
-                        "...${productName.length < 28 ? productName : productName.substring(0, 28)}",
-                    fontSize: 16,
-                    fw: FontWeight.bold,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    width: 180,
+                    child: CustomText(
+                      text: "$productName",
+                      fontSize: 16,
+                      fw: FontWeight.bold,
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10),

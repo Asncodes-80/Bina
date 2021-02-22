@@ -1,6 +1,7 @@
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Extracted/productInBasket.dart';
@@ -32,7 +33,12 @@ class Saved extends StatelessWidget {
           actionPane: SlidableDrawerActionPane(),
           actionExtentRatio: 0.25,
           child: Container(
-              color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: GestureDetector(
+              onTap: () =>
+                  Navigator.pushNamed(context, productViewPage, arguments: {
+                "productId": userDidSave[index]['id'],
+              }),
               child: ProductInBasket(
                 themeChange: themeChange,
                 productPrice: userDidSave[index]['price'],
@@ -40,7 +46,9 @@ class Saved extends StatelessWidget {
                 productName: themeChange.langName
                     ? userDidSave[index]['name_ar']
                     : userDidSave[index]['name_kur'],
-              )),
+              ),
+            ),
+          ),
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: 'حذف',

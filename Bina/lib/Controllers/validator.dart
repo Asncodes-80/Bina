@@ -2,8 +2,7 @@ class Validator {
   final regexForEmail =
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
-  final regexForPassword =
-      r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$";
+  final regexForPassword = r"^(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
 
   // Checking the User Email address with Regex
   bool emailValidator(emailAdd) {

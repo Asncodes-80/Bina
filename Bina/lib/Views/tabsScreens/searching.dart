@@ -30,7 +30,7 @@ class Search extends StatelessWidget {
         crossAxisCount: 2,
         // TODO CHANGE THE ASPECT RATIO IN HORIZONTAL
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 1.2),
+            (MediaQuery.of(context).size.height),
       ),
       itemBuilder: (_, index) => GestureDetector(
         onTap: () {
@@ -45,8 +45,8 @@ class Search extends StatelessWidget {
           productName: searchResult.isEmpty
               ? ""
               : themeChange.langName
-                  ? searchResult[index]['name_ar'].substring(0, 18)
-                  : searchResult[index]['name_ku'].substring(0),
+                  ? searchResult[index]['name_ar']
+                  : searchResult[index]['name_ku'],
           productAvailable: searchResult[index]['available'],
           productPrice: searchResult[index]['price'],
         ),
@@ -76,7 +76,7 @@ class Search extends StatelessWidget {
                       children: [
                         Container(
                           margin: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
+                              horizontal: 20, vertical: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             textDirection: TextDirection.rtl,

@@ -145,24 +145,29 @@ class ProductViewer extends StatelessWidget {
     // print(themeChange.darkTheme);
     return Container(
       width: 180,
-      height: 250,
+      // height: 300,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: themeChange.darkTheme ? darkObjBgColor : Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Image.network(
             productImg,
             width: 100,
+            height: 100,
+            fit: BoxFit.cover,
           ),
           SizedBox(height: 10),
-          CustomText(
-            text: "...$productName",
-            fontSize: 16,
-            fw: FontWeight.bold,
+          Container(
+            width: 100,
+            child: CustomText(
+              text: "$productName",
+              fontSize: 14,
+              fw: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 10),
           Divider(
@@ -203,7 +208,7 @@ class ProductsInGrid extends StatelessWidget {
         crossAxisCount: 2,
         // TODO CHANGE THE ASPECT RATIO IN HORIZONTAL
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 1.2),
+            (MediaQuery.of(context).size.height),
       ),
       itemBuilder: (_, index) => GestureDetector(
         onTap: () {
@@ -218,8 +223,8 @@ class ProductsInGrid extends StatelessWidget {
           productName: productsLs.isEmpty
               ? ""
               : themeChange.langName
-                  ? productsLs[index]['name_ar'].substring(0, 18)
-                  : productsLs[index]['name_ku'].substring(0),
+                  ? productsLs[index]['name_ar']
+                  : productsLs[index]['name_ku'],
           productAvailable: productsLs[index]['available'],
           productPrice: productsLs[index]['price'],
         ),

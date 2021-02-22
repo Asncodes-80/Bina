@@ -91,10 +91,13 @@ class _ProductViewState extends State<ProductView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomText(
-                text: "$productTitle",
-                fontSize: 18,
-                fw: FontWeight.bold,
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: CustomText(
+                  text: "$productTitle",
+                  fontSize: 18,
+                  fw: FontWeight.bold,
+                ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
@@ -124,7 +127,7 @@ class _ProductViewState extends State<ProductView> {
                                 color: Colors.white,
                               )),
                           onTap: () => setState(
-                              () => count >= 1 && count < 10 ? count += 1 : 0),
+                              () => count >= 1 && count < 200 ? count += 1 : 0),
                         ),
                       ),
                     ),
@@ -186,21 +189,26 @@ class _ProductViewState extends State<ProductView> {
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: CustomText(
-                color: Colors.white,
-                textAlign: TextAlign.right,
-                fontSize: 18,
-                text: themeChange.langName
-                    ? productInfo.isEmpty
-                        ? ""
-                        : productInfo[0]["description_ar"]
-                    : productInfo.isEmpty
-                        ? ""
-                        : productInfo[0]["description_ku"],
-              ),
-            ),
+            SingleChildScrollView(
+                child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 50),
+                  child: CustomText(
+                    color: Colors.white,
+                    textAlign: TextAlign.right,
+                    fontSize: 18,
+                    text: themeChange.langName
+                        ? productInfo.isEmpty
+                            ? ""
+                            : productInfo[0]["description_ar"]
+                        : productInfo.isEmpty
+                            ? ""
+                            : productInfo[0]["description_ku"],
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),

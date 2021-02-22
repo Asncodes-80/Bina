@@ -71,7 +71,7 @@ class HomeShopping extends StatelessWidget {
                                   text: themeChange.langName
                                       ? "😊 ${arabicLang["welcomeTitle"]}"
                                       : kurdishLang["welcomeTitle"],
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   color: Colors.white,
                                 ),
                               ],
@@ -89,7 +89,7 @@ class HomeShopping extends StatelessWidget {
                                       : themeChange.langName
                                           ? arabicLang["welcomeSubTitle"]
                                           : kurdishLang["welcomeSubTitle"],
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.white,
                                 )
                               ],
@@ -183,7 +183,7 @@ class HomeShopping extends StatelessWidget {
                                         ? arabicLang["discountTitle"]
                                         : kurdishLang["discountTitle"],
                                     color: Colors.white,
-                                    fontSize: 30,
+                                    fontSize: 25,
                                     fw: FontWeight.bold,
                                   ),
                                 ],
@@ -199,7 +199,7 @@ class HomeShopping extends StatelessWidget {
                                         ? arabicLang["discountSubtitle"]
                                         : kurdishLang["discountSubtitle"],
                                     color: Colors.white,
-                                    fontSize: 30,
+                                    fontSize: 20,
                                     fw: FontWeight.bold,
                                   ),
                                 ],

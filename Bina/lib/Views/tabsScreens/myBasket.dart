@@ -122,16 +122,16 @@ class MyBasket extends StatelessWidget {
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
             child: Container(
-                // color: Colors.white,
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: ProductInBasket(
-              themeChange: themeChange,
-              productPrice: productInBascket[index]['price'],
-              imgNetSource: productInBascket[index]['img'],
-              productName: themeChange.langName
-                  ? productInBascket[index]['name_ar']
-                  : productInBascket[index]['name_kur'],
-              count: productInBascket[index]['count'],
-            )),
+                  themeChange: themeChange,
+                  productPrice: productInBascket[index]['price'],
+                  imgNetSource: productInBascket[index]['img'],
+                  productName: themeChange.langName
+                      ? productInBascket[index]['name_ar']
+                      : productInBascket[index]['name_kur'],
+                  count: productInBascket[index]['count'],
+                )),
             secondaryActions: <Widget>[
               IconSlideAction(
                 caption: 'حذف',

@@ -320,33 +320,33 @@ class _MainoState extends State<Maino> {
                   tabs: [
                     GButton(
                       icon: Icons.home_filled,
-                      text: themeChange.langName
-                          ? arabicLang["home"]
-                          : kurdishLang["home"],
+                      // text: themeChange.langName
+                      //     ? arabicLang["home"]
+                      //     : kurdishLang["home"],
                     ),
                     GButton(
                       icon: Icons.search,
-                      text: themeChange.langName
-                          ? arabicLang["search"]
-                          : kurdishLang["search"],
+                      // text: themeChange.langName
+                      //     ? arabicLang["search"]
+                      //     : kurdishLang["search"],
                     ),
                     GButton(
                       icon: Icons.shopping_cart_outlined,
-                      text: themeChange.langName
-                          ? arabicLang["search"]
-                          : kurdishLang["search"],
+                      // text: themeChange.langName
+                      //     ? arabicLang["search"]
+                      //     : kurdishLang["search"],
                     ),
                     GButton(
                       icon: Icons.turned_in_not,
-                      text: themeChange.langName
-                          ? arabicLang["saved"]
-                          : kurdishLang["saved"],
+                      // text: themeChange.langName
+                      //     ? arabicLang["saved"]
+                      //     : kurdishLang["saved"],
                     ),
                     GButton(
                       icon: Icons.account_circle_outlined,
-                      text: themeChange.langName
-                          ? arabicLang["profile"]
-                          : kurdishLang["profile"],
+                      // text: themeChange.langName
+                      //     ? arabicLang["profile"]
+                      //     : kurdishLang["profile"],
                     ),
                   ],
                   selectedIndex: tabBarIndex,

@@ -35,6 +35,7 @@ class CurrentUserLocation {
           "${first.adminArea}- ${first.subAdminArea} - ${first.locality} - ${first.subLocality} - ${first.addressLine} - ${first.featureName}";
       return realAddress;
     } catch (e) {
+      print(e);
       return null;
     }
   }
