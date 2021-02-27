@@ -35,7 +35,9 @@ class _ChangeLangState extends State<ChangeLang> {
                     child: Icon(Icons.arrow_back_ios),
                   ),
                   CustomText(
-                    text: "بازگشت",
+                    text: themeChange.langName
+                        ? arabicLang["backward"]
+                        : kurdishLang["backward"],
                     fontSize: 18,
                     fw: FontWeight.w400,
                   )

@@ -10,19 +10,22 @@ import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:lottie/lottie.dart';
 
 class HomeShopping extends StatelessWidget {
-  const HomeShopping(
-      {@required this.productCategoriesList,
-      @required this.themeChange,
-      this.username,
-      this.homeScroller,
-      this.exhight,
-      this.onSearchSumbitKey});
+  const HomeShopping({
+    @required this.productCategoriesList,
+    @required this.themeChange,
+    this.username,
+    this.homeScroller,
+    this.exhight,
+    this.onSearchSumbitKey,
+    this.userAvatar,
+  });
   final String username;
   final DarkThemeProvider themeChange;
   final ScrollController homeScroller;
   final productCategoriesList;
   final exhight;
   final onSearchSumbitKey;
+  final String userAvatar;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,12 @@ class HomeShopping extends StatelessWidget {
                         child: InkWell(
                           splashColor: Colors.blue[300], // inkwell color
                           child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Image.asset(
-                                  "assets/images/isgpp_avatar_placeholder.png")),
+                            width: 40,
+                            height: 40,
+                            child: Image.asset(userAvatar == null
+                                ? "assets/images/isgpp_avatar_placeholder.png"
+                                : userAvatar),
+                          ),
                           onTap: () => print("sds"),
                         ),
                       ),
@@ -83,14 +88,18 @@ class HomeShopping extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               textDirection: TextDirection.rtl,
                               children: [
-                                CustomText(
-                                  text: username != null
-                                      ? username
-                                      : themeChange.langName
-                                          ? arabicLang["welcomeSubTitle"]
-                                          : kurdishLang["welcomeSubTitle"],
-                                  fontSize: 16,
-                                  color: Colors.white,
+                                GestureDetector(
+                                  onTap: () =>
+                                      Navigator.pushNamed(context, login),
+                                  child: CustomText(
+                                    text: username != null
+                                        ? username
+                                        : themeChange.langName
+                                            ? arabicLang["welcomeSubTitle"]
+                                            : kurdishLang["welcomeSubTitle"],
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
                                 )
                               ],
                             ),

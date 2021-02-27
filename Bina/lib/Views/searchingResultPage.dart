@@ -65,7 +65,7 @@ class _SearchResultState extends State<SearchResult> {
         crossAxisCount: 2,
         // TODO CHANGE THE ASPECT RATIO IN HORIZONTAL
         childAspectRatio: MediaQuery.of(context).size.width /
-            (MediaQuery.of(context).size.height / 1.2),
+            (MediaQuery.of(context).size.height),
       ),
       itemBuilder: (_, index) => GestureDetector(
         onTap: () {
@@ -135,7 +135,7 @@ class _SearchResultState extends State<SearchResult> {
             },
             body: Container(
               decoration: BoxDecoration(
-                color: lightBgColor,
+                color: themeChange.darkTheme ? darkBgColor : lightBgColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34),
                   topRight: Radius.circular(34),

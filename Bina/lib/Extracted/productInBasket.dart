@@ -1,3 +1,5 @@
+import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
+import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
@@ -54,7 +56,9 @@ class ProductInBasket extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: CustomText(
-                      text: count != null ? "$count : تعداد" : "",
+                      text: count != null
+                          ? "$count : ${themeChange.langName ? arabicLang["countInProduct"] : kurdishLang["countInProduct"]}"
+                          : "",
                       fontSize: 16,
                       color: Colors.green,
                       fw: FontWeight.bold,

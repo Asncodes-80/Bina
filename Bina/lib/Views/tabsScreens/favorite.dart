@@ -59,18 +59,28 @@ class Saved extends StatelessWidget {
                     await saved.delSavedProduct(id: userDidSave[index]['id']);
                 if (delProc)
                   showStatusInCaseOfFlush(
-                      context: context,
-                      icon: Icons.delete,
-                      iconColor: Colors.green,
-                      msg: "محصول مورد نظر حذف شد",
-                      title: "حذف از ذخیره ها");
+                    context: context,
+                    icon: Icons.delete,
+                    iconColor: Colors.green,
+                    msg: themeChange.langName
+                        ? arabicLang["savedProductDelSuccess"]
+                        : kurdishLang["savedProductDelSuccess"],
+                    title: themeChange.langName
+                        ? arabicLang["savedProductDelSuccessTitle"]
+                        : kurdishLang["savedProductDelSuccessTitle"],
+                  );
                 else {
                   showStatusInCaseOfFlush(
-                      context: context,
-                      icon: Icons.close,
-                      iconColor: Colors.red,
-                      msg: "این کالا یک بار حذف شده است",
-                      title: "مشکلی در حذف کالا");
+                    context: context,
+                    icon: Icons.close,
+                    iconColor: Colors.red,
+                    msg: themeChange.langName
+                        ? arabicLang["delExistsDsc"]
+                        : kurdishLang["delExistsDsc"],
+                    title: themeChange.langName
+                        ? arabicLang["delExistsTitle"]
+                        : kurdishLang["delExistsTitle"],
+                  );
                 }
               },
             ),
@@ -82,7 +92,9 @@ class Saved extends StatelessWidget {
       children: [
         Lottie.asset("assets/lottie/emptyLoading.json"),
         CustomText(
-          text: "گلای ذخیره شده ای موجود نیست",
+          text: themeChange.langName
+              ? arabicLang["emptySaved"]
+              : kurdishLang["emptySaved"],
         )
       ],
     );

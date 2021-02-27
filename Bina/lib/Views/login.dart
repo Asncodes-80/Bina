@@ -151,11 +151,16 @@ class _LoginState extends State<Login> {
               }
             } else {
               showStatusInCaseOfFlush(
-                  context: context,
-                  icon: Icons.close,
-                  iconColor: Colors.red,
-                  msg: "مشکلی در ورود شما پیش آمده است",
-                  title: "عملیات ورود با شکست مواجه شد");
+                context: context,
+                icon: Icons.close,
+                iconColor: Colors.red,
+                msg: themeChange.langName
+                    ? arabicLang["loginFailedDsc"]
+                    : kurdishLang["loginFailedDsc"],
+                title: themeChange.langName
+                    ? arabicLang["loginFailed"]
+                    : kurdishLang["loginFailed"],
+              );
             }
           },
           text: themeChange.langName

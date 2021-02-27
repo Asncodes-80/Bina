@@ -61,12 +61,14 @@ class UserRegisteration {
       bool ldsSavingResult = await LDS.LDS(
           userId: userInfo[0]['user']['id'].toString(),
           username: userInfo[0]['user']['username'],
-          avatar: userInfo[0]['profile_image'],
+          avatar: avatar,
           fullname: userInfo[0]['full_name'],
           phone: userInfo[0]['phone_number'],
           address: userInfo[0]['address'],
           province_ar: userInfo[0]['province']['name_ar'],
           province_ku: userInfo[0]['province']['name_ku']);
+
+      // await api.savingAvatar(id: userInfo[0]["id"], avatarImg: avatar);
 
       return ldsSavingResult;
     } catch (e) {

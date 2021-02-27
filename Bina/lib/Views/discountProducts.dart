@@ -136,7 +136,7 @@ class _DiscountedPageState extends State<DiscountedPage> {
                                     ),
                                     CustomText(
                                       text:
-                                          "${discountsProductLS[index]["code_discount"]} : کد تخفیف  ",
+                                          "${discountsProductLS[index]["code_discount"]} : ${themeChange.langName ? arabicLang['dicountCode'] : kurdishLang['dicountCode']}  ",
                                       color: Colors.grey[700],
                                       fontSize: 15,
                                       fw: FontWeight.bold,

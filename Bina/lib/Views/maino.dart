@@ -21,6 +21,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
+dynamic themeChange;
 // SQFLITE DB CLASSES
 UserBasket basket = UserBasket();
 MySaved saved = MySaved();
@@ -169,8 +170,12 @@ class _MainoState extends State<Maino> {
       case ConnectivityResult.none:
         showStatusInCaseOfFlush(
             context: context,
-            title: "connectionFailedTitle",
-            msg: "connectionFailed",
+            title: themeChange.langName
+                ? arabicLang["connectionFailed"]
+                : kurdishLang["connectionFailed"],
+            msg: themeChange.langName
+                ? arabicLang["connectionFailedDsc"]
+                : kurdishLang["connectionFailedDsc"],
             iconColor: Colors.blue,
             icon: Icons.wifi_off_rounded);
         break;
@@ -218,7 +223,7 @@ class _MainoState extends State<Maino> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    themeChange = Provider.of<DarkThemeProvider>(context);
 
     // print("This is DISCOUNTS ${discountsProductLS[0]["name_ar"]}");
 
@@ -242,6 +247,7 @@ class _MainoState extends State<Maino> {
               homeScroller: homeScrollController,
               exhight: expandedHight,
               productCategoriesList: productsCategoriesLs,
+              userAvatar: avatar,
               // discountsProduct:
               //     discountsProductLS.isEmpty ? [] : discountsProductLS,
               onSearchSumbitKey: (String searchCase) {
@@ -253,7 +259,9 @@ class _MainoState extends State<Maino> {
                 else if (searchCase == "")
                   showStatusInCaseOfFlush(
                       context: context,
-                      msg: "نمیتوان خالی جست و جو کرد",
+                      msg: themeChange.langName
+                          ? arabicLang["searchEmpty"]
+                          : kurdishLang["searchEmpty"],
                       title: "",
                       icon: Icon(Icons.text_fields),
                       iconColor: Colors.orange);
@@ -284,11 +292,11 @@ class _MainoState extends State<Maino> {
               userDidSave: mySavedProductList,
             ),
             Preferences(
-              fullname: fullname,
-              provinceName: themeChange.langName ? province_ar : province_ku,
-              themeChange: themeChange,
-              scrollController: _search,
-            ),
+                fullname: fullname,
+                provinceName: themeChange.langName ? province_ar : province_ku,
+                themeChange: themeChange,
+                scrollController: _search,
+                avatarImg: avatar),
           ],
         ),
         bottomNavigationBar: Directionality(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Bina/ConstFiles/Locale/Lang/Arabic.dart';
 import 'package:Bina/ConstFiles/Locale/Lang/Kurdish.dart';
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Controllers/flusher.dart';
 import 'package:Bina/Extracted/customText.dart';
 import 'package:Bina/Model/Classes/ThemeColor.dart';
@@ -93,6 +94,7 @@ class _ProductViewState extends State<ProductView> {
             children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
+                width: 300,
                 child: CustomText(
                   text: "$productTitle",
                   fontSize: 18,
@@ -102,7 +104,8 @@ class _ProductViewState extends State<ProductView> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 child: CustomText(
-                  text: "دلار $productPrice",
+                  text:
+                      "${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]} $productPrice",
                   color: Colors.green,
                   fontSize: 18,
                   fw: FontWeight.bold,
@@ -181,7 +184,9 @@ class _ProductViewState extends State<ProductView> {
                 textDirection: TextDirection.rtl,
                 children: [
                   CustomText(
-                    text: "توضیحات",
+                    text: themeChange.langName
+                        ? arabicLang["description"]
+                        : kurdishLang["description"],
                     color: Colors.white,
                     fontSize: 20,
                     fw: FontWeight.bold,
@@ -233,6 +238,22 @@ class _ProductViewState extends State<ProductView> {
             ),
           ),
           actions: [
+            productInfo.isNotEmpty
+                ? productInfo[0]['image_sliders'].isEmpty
+                    ? SizedBox()
+                    : FlatButton(
+                        onPressed: () => Navigator.pushNamed(context, moreImage,
+                            arguments: {
+                              "images": productInfo.isEmpty
+                                  ? []
+                                  : productInfo[0]['image_sliders']
+                            }),
+                        child: Icon(
+                          Icons.photo_library_outlined,
+                          color: Colors.black,
+                        ),
+                      )
+                : SizedBox(),
             FlatButton(
               onPressed: () async {
                 var result = await saved.addSave(
@@ -247,15 +268,21 @@ class _ProductViewState extends State<ProductView> {
                       context: context,
                       icon: Icons.turned_in_not,
                       iconColor: Colors.green,
-                      msg: "کالا ذخیره شد",
-                      title: "ذخیره کالا");
+                      msg: themeChange.langName
+                          ? arabicLang["productSaved"]
+                          : kurdishLang["productSaved"],
+                      title: "");
                 } else {
                   showStatusInCaseOfFlush(
                       context: context,
                       icon: Icons.close,
                       iconColor: Colors.red,
-                      msg: "مشکلی در ذخیره سازی پیش آمده است",
-                      title: "ذخیره کالا با مشکل مواجه شده است");
+                      msg: themeChange.langName
+                          ? arabicLang["saveIncounterErrTitle"]
+                          : kurdishLang["saveIncounterErrTitle"],
+                      title: themeChange.langName
+                          ? arabicLang["saveIncounterErrDesc"]
+                          : kurdishLang["saveIncounterErrDesc"]);
                 }
               },
               child: Icon(
@@ -305,11 +332,13 @@ class _ProductViewState extends State<ProductView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "${productPriceWithCount} دلار",
+                      text:
+                          "${productPriceWithCount} ${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]}",
                       fw: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                     MaterialButton(
+                      // minWidth: ,
                       onPressed: () async {
                         // print("pId : ${productInfo[0]["id"]}");
                         // print("image : ${productInfo[0]["image"]}");
@@ -333,33 +362,48 @@ class _ProductViewState extends State<ProductView> {
                               context: context,
                               icon: Icons.add,
                               iconColor: Colors.green,
-                              msg:
-                                  "محصول مورد نظر با موفقیت به سبد خرید شما اضافه شد",
-                              title: "عملیات موفقیت آمیز");
+                              msg: themeChange.langName
+                                  ? arabicLang["successBasketDsc"]
+                                  : kurdishLang["successBasketDsc"],
+                              title: themeChange.langName
+                                  ? arabicLang["successBasketTitle"]
+                                  : kurdishLang["successBasketTitle"]);
                         } else {
                           showStatusInCaseOfFlush(
                               context: context,
                               icon: Icons.close,
                               iconColor: Colors.red,
-                              msg:
-                                  "برای تغییر در محصول خود به سبد محصولات مراجعه کنید",
-                              title:
-                                  "نمیتوان محصول تکراری را به سبد اضافه کنید");
+                              msg: themeChange.langName
+                                  ? arabicLang["rapititionBasketAdderDsc"]
+                                  : kurdishLang["rapititionBasketAdderDsc"],
+                              title: themeChange.langName
+                                  ? arabicLang["rapititionBasketAdderTitle"]
+                                  : kurdishLang["rapititionBasketAdderTitle"]);
                         }
                       },
                       color: actionCt,
                       height: 45,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomText(
-                            text: "افزودن به سبد من",
-                            color: Colors.white,
-                            fw: FontWeight.bold,
-                            fontSize: 15,
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: themeChange.langName ? 15 : 0),
+                            child: CustomText(
+                              text: themeChange.langName
+                                  ? arabicLang["addMyBasket"]
+                                  : kurdishLang["addMyBasket"],
+                              color: Colors.white,
+                              fw: FontWeight.bold,
+                              fontSize: 13,
+                            ),
                           ),
-                          Icon(
-                            Icons.add_shopping_cart_outlined,
-                            color: Colors.white,
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: Colors.white,
+                            ),
                           )
                         ],
                       ),

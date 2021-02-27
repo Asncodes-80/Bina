@@ -18,7 +18,6 @@ import 'package:Bina/Views/signupPageViews/level1.dart';
 import 'package:Bina/Views/signupPageViews/level2.dart';
 import 'package:Bina/Views/signupPageViews/level3.dart';
 import 'package:Bina/Views/signupPageViews/level4.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,6 +45,7 @@ List provinceLs = [];
 int _provinceVal;
 var _provinceValSelected = "";
 File imgSource;
+String localAvatar = "";
 
 // Level 2 var
 String phoneNumber;
@@ -189,6 +189,10 @@ class _SignupState extends State<Signup> {
             fullname = onChangeFullname;
           });
         },
+        aw1Pressed: () => setState(() => localAvatar = "assets/images/aw1.png"),
+        aw2Pressed: () => setState(() => localAvatar = "assets/images/aw2.png"),
+        aw3Pressed: () => setState(() => localAvatar = "assets/images/aw3.png"),
+        aw4Pressed: () => setState(() => localAvatar = "assets/images/aw4.png"),
       ),
       PhoneSection(
         themeChanged: themeChange.langName,
@@ -249,7 +253,7 @@ class _SignupState extends State<Signup> {
         bottomNavigationBar: BottomButton(
           onTapped: () => pageIndex == 3
               ? navigatedToMarket(
-                  avatar: imgSource,
+                  avatar: localAvatar,
                   fullname: fullname,
                   username: username,
                   province: _provinceVal,
@@ -327,15 +331,21 @@ class _SignupState extends State<Signup> {
                   context: context,
                   icon: Icons.close,
                   iconColor: Colors.red,
-                  msg: "مشکلی در ثبت نام شما پیش آمده است",
-                  title: "عملیات  ثبت نام با شکست مواجه شد");
+                  msg: themeChange.langName
+                      ? arabicLang["signupFaildDsc"]
+                      : kurdishLang["signupFaildDsc"],
+                  title: themeChange.langName
+                      ? arabicLang["signupFaildTitle"]
+                      : kurdishLang["signupFaildTitle"]);
             }
           } else {
             showStatusInCaseOfFlush(
                 context: context,
                 icon: Icons.vpn_key_sharp,
                 iconColor: actionCt,
-                msg: "Hamahngi nist",
+                msg: themeChange.langName
+                    ? arabicLang["notCorespondPassword"]
+                    : kurdishLang["notCorespondPassword"],
                 title: "");
           }
         } else {

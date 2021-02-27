@@ -58,11 +58,16 @@ class MyBasket extends StatelessWidget {
           );
         } catch (e) {
           showStatusInCaseOfFlush(
-              context: context,
-              icon: Icons.close,
-              iconColor: Colors.red,
-              msg: "نمیتوان داده ای اضافه کرد",
-              title: "ارسال ناموفق");
+            context: context,
+            icon: Icons.close,
+            iconColor: Colors.red,
+            msg: themeChange.langName
+                ? arabicLang["orderFailedProcess"]
+                : kurdishLang["orderFailedProcess"],
+            title: themeChange.langName
+                ? arabicLang["orderFailed"]
+                : kurdishLang["orderFailed"],
+          );
         }
       });
       dynamic lastLen = await api.gettingOrderLengthByUserId(uId: userId);
@@ -72,18 +77,28 @@ class MyBasket extends StatelessWidget {
         // Deleting all product
         await myBasket.refreshBasketByEmpty();
         showStatusInCaseOfFlush(
-            context: context,
-            icon: Icons.send,
-            iconColor: Colors.green,
-            msg: "کالاهای شما با موفقیت به سفارشات ارسال شد",
-            title: "ارسال موفق");
+          context: context,
+          icon: Icons.send,
+          iconColor: Colors.green,
+          msg: themeChange.langName
+              ? arabicLang["successSendingOrder"]
+              : kurdishLang["successSendingOrder"],
+          title: themeChange.langName
+              ? arabicLang["titleSucSendingOrder"]
+              : kurdishLang["titleSucSendingOrder"],
+        );
       } else {
         showStatusInCaseOfFlush(
-            context: context,
-            icon: Icons.send,
-            iconColor: Colors.green,
-            msg: "ارسال سفارش ها با مشکل مواجه شده است",
-            title: "ارسال ناموفق");
+          context: context,
+          icon: Icons.send,
+          iconColor: Colors.green,
+          msg: themeChange.langName
+              ? arabicLang["failedSendingOrders"]
+              : kurdishLang["failedSendingOrders"],
+          title: themeChange.langName
+              ? arabicLang["faildSending"]
+              : kurdishLang["faildSending"],
+        );
       }
     }
 
@@ -134,7 +149,9 @@ class MyBasket extends StatelessWidget {
                 )),
             secondaryActions: <Widget>[
               IconSlideAction(
-                caption: 'حذف',
+                caption: themeChange.langName
+                    ? arabicLang["delTitle"]
+                    : kurdishLang["delTitle"],
                 color: Colors.red,
                 icon: Icons.delete,
                 onTap: () async {
@@ -145,15 +162,23 @@ class MyBasket extends StatelessWidget {
                         context: context,
                         icon: Icons.delete,
                         iconColor: Colors.green,
-                        msg: "محصول مورد نظر حذف شد",
-                        title: "حذف از سبد من");
+                        msg: themeChange.langName
+                            ? arabicLang["delProductSuccess"]
+                            : kurdishLang["delProductSuccess"],
+                        title: themeChange.langName
+                            ? arabicLang["delProTitle"]
+                            : kurdishLang["delProTitle"]);
                   else {
                     showStatusInCaseOfFlush(
                         context: context,
                         icon: Icons.close,
                         iconColor: Colors.red,
-                        msg: "این کالا یک بار حذف شده است",
-                        title: "مشکلی در حذف کالا");
+                        msg: themeChange.langName
+                            ? arabicLang["delProE"]
+                            : kurdishLang["delProE"],
+                        title: themeChange.langName
+                            ? arabicLang["deletingProbelm"]
+                            : kurdishLang["deletingProbelm"]);
                   }
                 },
               ),
@@ -168,7 +193,9 @@ class MyBasket extends StatelessWidget {
 
     final submitOrders = productInBascket.isEmpty
         ? CustomText(
-            text: "شما کالایی را انتخاب نکرده اید",
+            text: themeChange.langName
+                ? arabicLang["epmtyLottieSubtitle"]
+                : kurdishLang["epmtyLottieSubtitle"],
           )
         : Container(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -183,12 +210,15 @@ class MyBasket extends StatelessWidget {
                 children: [
                   CustomText(
                     fw: FontWeight.bold,
-                    text: "خرید",
+                    text: themeChange.langName
+                        ? arabicLang["buy"]
+                        : kurdishLang["buy"],
                     color: Colors.white,
                   ),
                   CustomText(
                     fw: FontWeight.bold,
-                    text: "مجموع $sumPricer دلار",
+                    text:
+                        "${themeChange.langName ? arabicLang["count"] : kurdishLang["count"]} $sumPricer ${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]}",
                     color: Colors.white,
                   ),
                 ],

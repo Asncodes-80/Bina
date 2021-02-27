@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Bina/ConstFiles/constInitVar.dart';
+import 'package:Bina/Views/maino.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ApiAccess {
   Dio dio = Dio();
@@ -72,11 +74,6 @@ class ApiAccess {
       province,
       address,
       avatarImg}) async {
-    // print("$username / $pass");
-    // print("$uPK / $fullname");
-    // print("$phone / $province");
-    // print("$avatarImg");
-
     String basicUsername = username;
     String basicPassword = pass;
     String basicAuth =
@@ -100,11 +97,12 @@ class ApiAccess {
       "full_name": fullname,
       "phone_number": phone,
       "province": province,
-      "address": address,
+      "address": address
       // "profile_image": avatarImg
     });
 
     print(res.data);
+
     return res.data;
   }
 

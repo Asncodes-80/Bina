@@ -14,3 +14,4 @@ const searchResultPage = "searchResult";
 const discountPage = "discountsProducts";
 const productBasketView = "productBasketView";
 const connectionPage = "checkConnect";
+const moreImage = "moreImgProdyct";

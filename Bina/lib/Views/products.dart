@@ -175,13 +175,20 @@ class ProductViewer extends StatelessWidget {
             thickness: 1,
           ),
           CustomText(
-            text: productAvailable ? "موجود" : "ناموجود",
+            text: productAvailable
+                ? themeChange.langName
+                    ? arabicLang["available"]
+                    : kurdishLang["available"]
+                : themeChange.langName
+                    ? arabicLang["unAvailable"]
+                    : kurdishLang["unAvailable"],
             fontSize: 15,
             fw: FontWeight.bold,
             color: productAvailable ? Colors.green : Colors.red,
           ),
           CustomText(
-            text: "$productPrice دلار",
+            text:
+                "$productPrice ${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]}",
             fontSize: 20,
             fw: FontWeight.bold,
             color: Colors.green,

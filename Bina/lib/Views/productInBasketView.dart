@@ -80,14 +80,16 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 child: CustomText(
-                  text: "دلار ${basketParam['price']}",
+                  text:
+                      "${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]} ${basketParam['price']}",
                   color: Colors.green,
                   fontSize: 18,
                   fw: FontWeight.bold,
                 ),
               ),
               CustomText(
-                text: "تعداد انتخاب قبلی $userCount",
+                text:
+                    "${themeChange.langName ? arabicLang['passtCount'] : kurdishLang['passtCount']} $userCount",
                 color: Colors.green,
                 fontSize: 18,
                 fw: FontWeight.bold,
@@ -111,8 +113,8 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
                                 Icons.add,
                                 color: Colors.white,
                               )),
-                          onTap: () => setState(
-                              () => count >= 1 && count < 10 ? count += 1 : 0),
+                          onTap: () =>
+                              setState(() => count >= 1 ? count += 1 : 0),
                         ),
                       ),
                     ),
@@ -207,21 +209,13 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "${basketParam['price']} دلار",
+                      text:
+                          "${basketParam['price']} ${themeChange.langName ? arabicLang["Dollar"] : kurdishLang["Dollar"]}",
                       fw: FontWeight.bold,
                       fontSize: 20,
                     ),
                     MaterialButton(
                       onPressed: () async {
-                        // print("pId : ${productInfo[0]["id"]}");
-                        // print("image : ${productInfo[0]["image"]}");
-                        // print(
-                        //     "name : ${themeChange.langName ? productInfo[0]["name_ar"] : productInfo[0]["name_ku"]}");
-                        // print("price : ${productInfo[0]["price"]}");
-                        // print("count : $count");
-
-                        // print(productPriceWithCount);
-
                         var result = await basket.updateMyBasket(
                           id: basketParam["id"],
                           count: count,
@@ -232,15 +226,23 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
                               context: context,
                               icon: Icons.edit,
                               iconColor: Colors.green,
-                              msg: "محصول شما ویرایش شد",
-                              title: "عملیات موفقیت آمیز");
+                              msg: themeChange.langName
+                                  ? arabicLang["productEdited"]
+                                  : kurdishLang["productEdited"],
+                              title: themeChange.langName
+                                  ? arabicLang["successProcess"]
+                                  : kurdishLang["successProcess"]);
                         } else {
                           showStatusInCaseOfFlush(
                               context: context,
                               icon: Icons.edit,
                               iconColor: Colors.red,
-                              msg: "مشکلی در فرایند ویرایش محصول",
-                              title: "خطا");
+                              msg: themeChange.langName
+                                  ? arabicLang["problemInEdit"]
+                                  : kurdishLang["problemInEdit"],
+                              title: themeChange.langName
+                                  ? arabicLang["errorTitle"]
+                                  : kurdishLang["errorTitle"]);
                         }
                       },
                       color: actionCt,
@@ -249,7 +251,9 @@ class _ProductInBasketViewState extends State<ProductInBasketView> {
                       child: Row(
                         children: [
                           CustomText(
-                            text: "ویرایش در محصول",
+                            text: themeChange.langName
+                                ? arabicLang["editProduct"]
+                                : kurdishLang["editProduct"],
                             color: Colors.white,
                             fw: FontWeight.bold,
                             fontSize: 15,

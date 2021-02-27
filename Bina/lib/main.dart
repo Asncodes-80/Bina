@@ -1,5 +1,6 @@
 import 'package:Bina/ConstFiles/routeStringVar.dart';
 import 'package:Bina/Views/connection.dart';
+import 'package:Bina/Views/moreImageSlider.dart';
 // import 'package:Bina/Model/Classes/LangStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -83,6 +84,7 @@ class _MyAppState extends State<MyApp> {
               discountPage: (context) => DiscountedPage(),
               productBasketView: (context) => ProductInBasketView(),
               connectionPage: (context) => ConnectionPage(),
+              moreImage: (context) => MoreImageSlider(),
             },
           );
         },

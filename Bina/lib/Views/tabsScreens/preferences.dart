@@ -20,17 +20,20 @@ class Preferences extends StatelessWidget {
     @required this.themeChange,
     this.fullname,
     this.provinceName,
+    this.avatarImg,
   });
 
   final fullname;
   final provinceName;
   final DarkThemeProvider themeChange;
   final ScrollController scrollController;
+  final String avatarImg;
 
   @override
   Widget build(BuildContext context) {
     final profileObject = fullname != null
         ? SquareAvatar(
+            avatarImg: avatarImg,
             userNameLimited: fullname != null ? fullname[0] : "",
             fullname: fullname != null ? fullname : "",
           )
@@ -43,9 +46,12 @@ class Preferences extends StatelessWidget {
               onPressed: () => Alert(
                 context: context,
                 type: AlertType.warning,
-                title: "می خواهید از حساب خود خارج شوید؟",
-                desc:
-                    "برای خروج از حساب خود بر روی دکمه بلی بفشارید و برای راه اندازی اولیه از برنامه خارج خواهید شد",
+                title: themeChange.langName
+                    ? arabicLang["logoutQuestion"]
+                    : kurdishLang["logoutQuestion"],
+                desc: themeChange.langName
+                    ? arabicLang["logoutQuestionDsc"]
+                    : kurdishLang["logoutQuestionDsc"],
                 style: AlertStyle(
                     backgroundColor:
                         themeChange.darkTheme ? darkBar : Colors.white,
@@ -56,7 +62,9 @@ class Preferences extends StatelessWidget {
                 buttons: [
                   DialogButton(
                     child: Text(
-                      "بلی",
+                      themeChange.langName
+                          ? arabicLang["allow"]
+                          : kurdishLang["allow"],
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -73,7 +81,9 @@ class Preferences extends StatelessWidget {
                   ),
                   DialogButton(
                     child: Text(
-                      "خیر",
+                      themeChange.langName
+                          ? arabicLang["deny"]
+                          : kurdishLang["deny"],
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -85,7 +95,9 @@ class Preferences extends StatelessWidget {
                 ],
               ).show(),
               child: CustomText(
-                text: "Logout",
+                text: themeChange.langName
+                    ? arabicLang["logout"]
+                    : kurdishLang["logout"],
                 color: Colors.red,
                 fw: FontWeight.bold,
                 fontSize: 18,
@@ -100,7 +112,9 @@ class Preferences extends StatelessWidget {
                 minWidth: 100,
                 height: 50,
                 child: CustomText(
-                  text: 'ورود',
+                  text: themeChange.langName
+                      ? arabicLang["loginNow"]
+                      : kurdishLang["loginNow"],
                   color: Colors.white,
                   fontSize: 16,
                   fw: FontWeight.bold,
@@ -266,10 +280,11 @@ class PreferencesSettings extends StatelessWidget {
 }
 
 class SquareAvatar extends StatelessWidget {
-  const SquareAvatar({this.userNameLimited, this.fullname});
+  const SquareAvatar({this.userNameLimited, this.fullname, this.avatarImg});
 
   final String userNameLimited;
   final String fullname;
+  final String avatarImg;
 
   @override
   Widget build(BuildContext context) {
@@ -280,29 +295,34 @@ class SquareAvatar extends StatelessWidget {
           height: 150,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: Colors.blue[800],
+            color: avatarImg != null ? Colors.transparent : Colors.blue[800],
             borderRadius: BorderRadius.circular(25),
           ),
-          child: CustomText(
-            text: userNameLimited,
-            fontSize: 50,
-            color: Colors.white,
-          ),
+          child: avatarImg != null
+              ? CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage(avatarImg),
+                )
+              : CustomText(
+                  text: userNameLimited,
+                  fontSize: 50,
+                  color: Colors.white,
+                ),
         ),
-        SizedBox(height: 30),
+        SizedBox(height: 10),
         CustomText(
           text: fullname,
           fontSize: 18,
         ),
-        GestureDetector(
-          // Preferences Settings
-          onTap: () => print("Go to Setting name"),
-          child: CustomText(
-            text: "Change your Preferences",
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
+        // GestureDetector(
+        //   // Preferences Settings
+        //   onTap: () => print("Go to Setting name"),
+        //   child: CustomText(
+        //     text: "Change your Preferences",
+        //     fontSize: 14,
+        //     color: Colors.grey,
+        //   ),
+        // ),
       ],
     );
   }
